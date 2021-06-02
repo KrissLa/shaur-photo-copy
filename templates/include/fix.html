@@ -1,0 +1,15 @@
+{% load cache %}
+{% cache 86000 fix %}
+<div class="social-fixed-a-l">
+    <div class="social-fixed">
+        <a title="Инстаграм" target="_blank" href="https://www.instagram.com/sviatlana_haurylavets"><i class="fab fa-instagram"></i></a>
+        <a title="Группа VK" target="_blank" href="https://vk.com/club134565385"><i class="fab fa-vk"></i></a>
+        <!--    <a href="tel:+375291234567"><i class="fas fa-phone-alt"></i></a>-->
+    </div>
+</div>
+<div class="reviews-s-f-a-l offer-ph-fix">
+    <div class="social-fixed-rev">
+        <a href="{% url 'offer_ph' %}" class="offer-ph-fix">Заказать фотосъёмку</a>
+    </div>
+</div>
+{% endcache %}

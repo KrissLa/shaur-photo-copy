@@ -1,0 +1,1 @@
+default_app_config = 'places1.apps.Places1Config'

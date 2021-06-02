@@ -1,0 +1,634 @@
+<!-- Подключение базового шаблона -->
+{% extends 'base.html' %}
+<!-- Для подключение деректории static -->
+{% load static recaptcha3 %}
+{% load cache %}
+<!-- Meta данные -->
+{% block meta %}
+    {% for seo in main_list %}
+        <title>{{ seo.SEO_title }}</title>
+        <meta name="description" content="{{ seo.SEO_description }}">
+    {% endfor %}
+    <meta property="og:title" content="SHAUR-PHOTO.COM | Фотограф Светлана Гавриловец"/>
+    <meta property="og:url" content="https%3A%2F%2Fshaur-photo.com"/>
+    <meta property="og:image" content="https://sun9-44.userapi.com/c854124/v854124924/2184dc/dAPsil5XX4s.jpg"/>
+    <meta property="og:image:secure_url"
+          content="https://sun9-44.userapi.com/c854124/v854124924/2184dc/dAPsil5XX4s.jpg"/>
+    <meta property="og:image:type" content="image/jpeg"/>
+    {% cache 86000 main_swiper %}
+        <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+    {% endcache %}
+{% endblock meta %}
+{% block seo %}
+{% endblock seo %}
+<!-- Подключение стилей -->
+{% block style %}
+    {% cache 86000 main_style %}
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    {% endcache %}
+    {% recaptcha_init %}
+    {% recaptcha_ready action_name='homepage' %}
+{% endblock style %}
+
+{% block body_name %}
+    <body>
+{% endblock body_name %}
+
+{% block main_pc %}
+    li-active
+{% endblock main_pc %}
+
+{% block main %}
+    li-active
+{% endblock main %}
+
+{% block div_grid %}
+    {#    <div class="grid-albums-detail">#}
+{% endblock div_grid %}
+
+
+{% block header %}
+    <header class="header-index">
+        {#        <h2>#}
+        {#            <span class="neon_text" data-text="Д">Д</span><span class="neon_text" data-text="О">О</span><span#}
+        {#                class="neon_text" data-text="Б">Б</span><span class="neon_text" data-text="Р">Р</span><span#}
+        {#                class="neon_text" data-text="О">О</span><span> </span>#}
+        {#            <span class="neon_text" data-text="П">П</span><span class="neon_text" data-text="О">О</span><span#}
+        {#                class="neon_text" data-text="Ж">Ж</span><span class="neon_text" data-text="А">А</span><span#}
+        {#                class="neon_text" data-text="Л">Л</span><span class="neon_text" data-text="О">О</span><span#}
+        {#                class="neon_text" data-text="В">В</span><span class="neon_text" data-text="А">А</span><span#}
+        {#                class="neon_text" data-text="Т">Т</span><span class="neon_text" data-text="Ь">Ь</span>#}
+        {#            <span> </span><span class="neon_text" data-text="В">В</span><span></span>#}
+        {#            <span class="neon_text" data-text="М">М</span><span class="neon_text" data-text="О">О</span><span#}
+        {#                class="neon_text" data-text="Й">Й</span><span> </span>#}
+        {#            <span class="neon_text" data-text="Й">М</span><span class="neon_text" data-text="И">И</span><span#}
+        {#                class="neon_text" data-text="Р">Р</span><span class="neon_text" data-text="!">!</span>#}
+        {#        </h2>#}
+        {% cache 86000 main_header %}
+            <h1>
+                <span>S</span><span>H</span><span>A</span><span>U</span><span>R</span><span>-</span><span>P</span><span>H</span><span>O</span><span>T</span><span>O</span>
+            </h1>
+            <div class="neon-button">
+                <a class="header-inst" target="_blank" href="https://www.instagram.com/sviatlana_haurylavets">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Instagram
+                </a>
+                <div class="scrolldown">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <a class="header-vk pc" target="_blank" href="https://vk.com/club134565385">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Вконтакте
+                </a>
+                <a class="header-vk a-tel" href="vk://vk.com/club134565385">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Вконтакте
+                </a>
+            </div>
+        {% endcache %}
+    </header>
+{% endblock header %}
+
+{% block content %}
+    {% for main in main_list %}
+        <main>
+            {% if main.about %}
+                {% cache 300 main_about %}
+                    <section class="about-me">
+                        <div class="content-about">
+                            <h2 data-aos="fade-up"
+                                data-aos-duration="500">{{ main.hello|safe }}</h2>
+                            <div data-aos="fade-up"
+                                 data-aos-duration="500">
+                                {{ main.about_body|safe }}
+                            </div>
+                            <a href="{% url 'albums' %}"
+                               data-aos="fade-up"
+                               data-aos-anchor-placement="bottom-bottom"
+                               data-aos-duration="700">Альбомы</a>
+                        </div>
+                        <ul data-aos="fade-up"
+                            data-aos-offset="100"
+                            data-aos-duration="700"
+                            class="sci-about">
+                            <li><a title="Инстаграм" target="_blank"
+                                   href="https://www.instagram.com/sviatlana_haurylavets"><i
+                                    class="fab fa-instagram"></i></a></li>
+                            <li class="pc"><a title="Группа VK" target="_blank" href="https://vk.com/club134565385"><i
+                                    class="fab fa-vk"></i></a></li>
+                            <li class="pc"><a title="Страничка VK" target="_blank" class="last-a-about"
+                                              href="https://vk.com/mischkova"><i
+                                    class="fab fa-vk"></i></a>
+                            </li>
+                            <li class="a-tel"><a href="vk://vk.com/club134565385"><i class="fab fa-vk"></i></a></li>
+                            <li class="a-tel"><a class="last-a-about" href="vk://vk.com/mischkova"><i
+                                    class="fab fa-vk"></i></a>
+                            </li>
+                        </ul>
+                    </section>
+                {% endcache %}
+            {% endif %}
+
+            {% if main.photography %}
+                <section class="photoalbum">
+                    {% cache 600 main_photoalbum %}
+                        <div class="container-ph">
+                            {% for ph in view.get_photography %}
+                                <input type="radio" name="slide"
+                                       {% if ph.first_photography %}checked="checked"{% endif %}
+                                       id="{{ ph.id_input_main }}">
+                            {% endfor %}
+
+                            <ul>
+                                {% for ph in view.get_photography %}
+                                    <li>
+                                        <div class="slide" id="{{ ph.id_div_main }}">
+                                            <img class="ph-img-bg lazyload" data-src="{{ ph.image_bg.url }}"
+                                                 src="{{ ph.image_bg.small.url }}" alt="{{ ph.alt_bg }}">
+                                            <img class="ph-img-bg-tel lazyload" data-src="{{ ph.image_bg_tel.url }}"
+                                                 src="{{ ph.image_bg_tel.small.url }}"
+                                                 alt="{{ ph.alt_bg }}">
+                                            <div class="ph-body">
+                                                <div class="ph-post"
+                                                     data-aos="zoom-in"
+                                                     data-aos-offset="1"
+                                                     data-aos-duration="700">
+                                                    <div class="ph-post-img">
+                                                        <img class="lazyload" data-src="{{ ph.image_min.url }}"
+                                                             src="{{ ph.image_min.small.url }}" alt="{{ ph.alt_min }}"
+                                                             title="{{ ph.title_min }}">
+                                                    </div>
+                                                    <div class="ph-post-info">
+                                                        <h2 class="ph-post-title">{{ ph.name }}</h2>
+                                                        <p class="ph-post-text">
+                                                            {{ ph.description }}
+                                                        </p>
+                                                        <div class="ph-post-a">
+                                                            <a
+                                                                    href="{% url 'albums' %}#photography-t={{ ph.id_css }}"
+                                                                    class="ph-post-cta">Альбомы</a>
+                                                            {% if ph.a_price %}
+                                                                <a href="{{ ph.a_price }}"
+                                                                   class="ph-post-cta">Прайс</a>
+                                                            {% endif %}
+                                                            <a href="{% url 'offer_ph' %}"
+                                                               class="ph-post-cta ph-post-a-lf">Заказать
+                                                                фотосъёмку</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <label for="{{ ph.label_for_prev }}" class="prev"><i data-aos="fade-right"
+                                                                                                 data-aos-anchor-placement="center-bottom"
+                                                                                                 class="fas fa-chevron-left"></i></label>
+                                            <label for="{{ ph.label_for_next }}" class="next"><i
+                                                    data-aos-anchor-placement="center-bottom"
+                                                    data-aos="fade-left"
+                                                    class="fas fa-chevron-right"></i></label>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+
+                                <li class="nav">
+                                    <div class="nav-div"
+                                         data-aos="fade-up"
+                                         data-aos-anchor-placement="top-bottom">
+                                        {% for ph in view.get_photography %}
+                                            <label for="{{ ph.id_input_main }}" class="dots"
+                                                   id="{{ ph.id_label_dots }}"><i
+                                                    class="far fa-dot-circle"></i></label>
+                                        {% endfor %}
+                                    </div>
+
+                                </li>
+                            </ul>
+                        </div>
+                    {% endcache %}
+                </section>
+            {% endif %}
+
+            {% if main.last_album %}
+                {% for al in view.get_last_album %}
+                    <section class="last-album">
+                        <div class="la-section-title">
+                            <h3><a data-aos="zoom-out-down"
+                                   data-aos-duration="700" href="{{ al.get_absolute_url }}">{{ al.name }}</a></h3>
+                        </div>
+
+                        <div class="swiper-container"
+                             data-aos="zoom-in"
+                             data-aos-anchor-placement="top-center"
+                             data-aos-duration="700">
+                            <div class="swiper-wrapper">
+                                {% for ph in al.get_last_albums_photo %}
+                                    <div class="swiper-slide"><img class="lazyload" data-src="{{ ph.photo.large.url }}"
+                                                                   src="{{ ph.photo.small.url }}"></div>
+                                {% endfor %}
+                            </div>
+                            <!-- Add Pagination -->
+                            <div class="swiper-pagination"></div>
+                            <!-- Add Arrows -->
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+
+                        <div data-aos="zoom-in"
+                             data-aos-anchor-placement="bottom-bottom"
+                             data-aos-duration="700" class="neon-button neon-button-swiper">
+                            <a class="full-album" href="{{ al.get_absolute_url }}">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                Перейти к альбому
+                            </a>
+
+                            <a class="all-albums" href="{% url 'albums' %}">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                ВСе альбомы
+                            </a>
+
+                        </div>
+
+
+                        {% cache 86000 main_swiper_body %}
+                            <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
+                            <script>
+                                var swiper = new Swiper('.swiper-container', {
+                                    slidesPerView: 3,
+                                    spaceBetween: 10,
+                                    slidesPerGroup: 2,
+                                    loop: false,
+                                    loopFillGroupWithBlank: true,
+                                    pagination: {
+                                        el: '.swiper-pagination',
+                                        clickable: true,
+                                    },
+                                    navigation: {
+                                        nextEl: '.swiper-button-next',
+                                        prevEl: '.swiper-button-prev',
+                                    },
+                                });
+                            </script>
+                        {% endcache %}
+                    </section>
+                {% empty %}
+                {% endfor %}
+            {% endif %}
+
+            {% if main.reviews %}
+                <section class="reviews">
+                    <div class="container-rev">
+                        {% for rev in view.get_reviews %}
+                            <div class="rev-box"
+                                 data-aos="fade-up"
+                                 data-aos-duration="700">
+                                <div class="rev-content">
+                                    <img data1-src="{% static 'images/icons/quote.png' %}" class="quote">
+                                    <p>{{ rev.review_body }}</p>
+                                    <img data1-src="{{ rev.author.socialaccount_set.all.0.get_avatar_url }}"
+                                         class="rev-user">
+                                    <h3>{{ rev.author.first_name }} {{ rev.author.last_name }}</h3>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% cache 86000 neon_button_rev %}
+                        <div class="neon-button neon-button-swiper neon-button-rev">
+                            <a data-aos="fade-up"
+                               data-aos-duration="700"
+                               data-aos-offset="50"
+                               class="full-album" href="{% url 'review_list' %}">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                Перейти к отзывам
+                            </a>
+
+                            <a data-aos="fade-up"
+                               data-aos-duration="700"
+                               data-aos-offset="50"
+                               class="all-albums" href="{% url 'review_list' %}#reviews-t=feedback">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                Оставить отзыв
+                            </a>
+                        </div>
+                    {% endcache %}
+                </section>
+            {% endif %}
+
+            {% if main.blog %}
+                {% for post in view.get_post %}
+                    <section class="blog">
+                        <div class="bg-blog">
+                            <div class="bg-blog-bl">
+                                <div class="blog-body"
+                                     data-aos="fade-up"
+                                     data-aos-duration="700">
+                                    <div class="blog-post">
+                                        <div class="blog-post-img">
+                                            <img class="lazyload" data-src="{{ post.small_image.medium.url }}"
+                                                 src="{{ post.small_image.small.url }}" alt="{{ post.small_image_alt }}"
+                                                 title="{{ post.small_image_title }}">
+                                        </div>
+                                        <div class="blog-post-info">
+                                            <h2 class="blog-post-title">{{ post.name }}</h2>
+                                            <p class="blog-post-text">
+                                                {{ post.short_description }}
+                                            </p>
+                                            <div class="blog-post-a">
+                                                <a data-aos="fade-up"
+                                                   data-aos-offset="100"
+                                                   data-aos-duration="1500"
+                                                   href="{{ post.get_absolute_url }}" class="blog-post-cta">читать
+                                                    статью</a>
+                                                <a data-aos="fade-up"
+                                                   data-aos-offset="100"
+                                                   data-aos-duration="1500"
+                                                   data-aos-delay="200"
+                                                   href="{% url 'post_list' %}" class="blog-post-cta">блог</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </section>
+                {% empty %}
+                {% endfor %}
+            {% endif %}
+
+            {% if main.place %}
+                {% cache 1800 places_ %}
+                    <section class="places">
+                        <div class="places-text">
+
+                            <h2>
+                <span data-aos="zoom-in"
+                      data-aos-offset="200"
+                      data-aos-duration="700"
+                      class="word">Я</span>
+                                <span data-aos="zoom-in"
+                                      data-aos-offset="200"
+                                      data-aos-duration="700"
+                                      data-aos-delay="50"
+                                      class="word">собираю</span>
+                                <span data-aos="zoom-in"
+                                      data-aos-offset="200"
+                                      data-aos-duration="700"
+                                      data-aos-delay=100"
+                                      class="word">свою</span>
+                                <span data-aos="zoom-in"
+                                      data-aos-offset="200"
+                                      data-aos-duration="700"
+                                      data-aos-delay="150"
+                                      class="word">коллекцию</span>
+                                <span data-aos="zoom-in"
+                                      data-aos-offset="200"
+                                      data-aos-duration="700"
+                                      data-aos-delay="200"
+                                      class="word">с</span>
+                                <span data-aos="zoom-in"
+                                      data-aos-offset="200"
+                                      data-aos-duration="700"
+                                      data-aos-delay="250"
+                                      class="word">красивыми</span>
+                                <span data-aos="zoom-in"
+                                      data-aos-offset="200"
+                                      data-aos-duration="700"
+                                      data-aos-delay="300"
+                                      class="word">местами</span>
+                                <span data-aos="zoom-in"
+                                      data-aos-offset="200"
+                                      data-aos-duration="700"
+                                      data-aos-delay="350"
+                                      class="word">для</span>
+                                <span data-aos="zoom-in"
+                                      data-aos-offset="200"
+                                      data-aos-duration="700"
+                                      data-aos-delay="400"
+                                      class="word">фото</span>
+                                <span data-aos="zoom-in"
+                                      data-aos-offset="200"
+                                      data-aos-duration="700"
+                                      data-aos-delay="450"
+                                      class="word">и</span>
+                                <span data-aos="zoom-in"
+                                      data-aos-offset="200"
+                                      data-aos-duration="700"
+                                      data-aos-delay="500"
+                                      class="word">Вы</span>
+                                <span data-aos="zoom-in"
+                                      data-aos-offset="200"
+                                      data-aos-duration="700"
+                                      data-aos-delay="550"
+                                      class="word">можете</span>
+                                <span data-aos="zoom-in"
+                                      data-aos-offset="200"
+                                      data-aos-duration="700"
+                                      data-aos-delay="600"
+                                      class="word">мне</span>
+                                <span data-aos="zoom-in"
+                                      data-aos-offset="200"
+                                      data-aos-duration="700"
+                                      data-aos-delay="650"
+                                      class="word">в</span>
+                                <span data-aos="zoom-in"
+                                      data-aos-offset="200"
+                                      data-aos-duration="700"
+                                      data-aos-delay="700"
+                                      class="word">этом</span>
+                                <span data-aos="zoom-in"
+                                      data-aos-offset="200"
+                                      data-aos-duration="700"
+                                      data-aos-delay="750"
+                                      class="word">помочь.</span>
+                            </h2>
+
+
+                        </div>
+
+                        <div class="places-box">
+                            <img data-src="{{ main.image_pl1.url }}" src="{{ main.image_pl1.small.url }}"
+                                 class="mask1 lazyload" alt="{{ main.image_pl1_alt }}"
+                                 title="{{ main.image_pl_title }}">
+                            <img data-src="{{ main.image_pl2.url }}" src="{{ main.image_pl2.small.url }}"
+                                 class="mask2 lazyload" alt="{{ main.image_pl2_alt }}"
+                                 title="{{ main.image_pl_title }}">
+                        </div>
+
+                        <div data-aos="zoom-in"
+                             data-aos-offset="50"
+                             data-aos-duration="700"
+                             class="neon-button neon-button-swiper nb-places">
+                            <a class="full-album" href="{% url 'places_list' %}">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                Посмотреть
+                            </a>
+
+                            <a class="all-albums" href="{% url 'places_list' %}#places-t=offer">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                предложить
+                            </a>
+                        </div>
+                    </section>
+                {% endcache %}
+            {% endif %}
+            {% if main.offer_ph %}
+                <section class="offer-main">
+                    <div class="offer-main-h">
+                        <h2>Заказать фотосъёмку</h2>
+                    </div>
+                    <div class="offer-div offer-main-div">
+                        <div class="offer-container">
+                            <form action="{% url 'add_offer' %}" method="post">
+                                {% csrf_token %}
+                                <div class="offer-row100 mar-75">
+                                    <p class="p-row100">
+                                        Пожалуйста, заполните форму и я перезвоню Вам в указанное Вами время для
+                                        подтверждения заказа и уточнения деталей в течении 24 часов.
+                                    </p>
+                                </div>
+                                <div class="offer-row100">
+                                    <div class="offer-col">
+                                        <div class="offer-inputBox">
+                                            {{ form.name }}
+                                            <span class="offer-text">Ваше имя</span>
+                                            <span class="offer-line"></span>
+                                        </div>
+                                    </div>
+                                    <div class="offer-col">
+                                        <div class="offer-inputBox">
+                                            {{ form.phone_number }}
+                                            <span class="offer-text">Номер телефона с кодом</span>
+                                            <span class="offer-line"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="offer-row100">
+                                    <p class="p-row100">
+                                        Пожалуйста, укажите период времени, в который я могу Вам перезвонить:
+                                    </p>
+                                </div>
+                                <div class="offer-row100">
+                                    <div class="offer-col">
+                                        {{ form.time_to_call_1 }}
+                                    </div>
+                                    <div class="offer-col">
+                                        {{ form.time_to_call_2 }}
+                                    </div>
+                                </div>
+
+                                <div class="offer-row100">
+                                    <div class="offer-col">
+                                        <div class="offer-inputBox">
+                                            {{ form.date_of_photography }}
+                                            <span class="offer-text">
+                                            <span class="offer-text-tel">Удобные для Вас даты</span>
+                                            <span
+                                                    class="offer-text-pc">
+                                                Желаемая дата фотосъёмки (одна или несколько в удобном для Вас формате)
+                                            </span>
+                                        </span>
+
+                                            <span class="offer-line"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="offer-row100">
+                                    <p class="p-row100">
+                                        Пожалуйста, выберите фотосъёмку:
+                                    </p>
+                                </div>
+                                <div class="offer-row100">
+                                    <div class="offer-col">
+                                        {{ form.photography }}
+                                    </div>
+                                </div>
+                                <div class="offer-row100">
+                                    <div class="offer-col">
+                                        <div class="offer-inputBox">
+                                            {{ form.сity }}
+                                            <span class="offer-text">Город</span>
+                                            <span class="offer-line"></span>
+                                        </div>
+                                    </div>
+                                    <div class="offer-col">
+                                        <div class="offer-inputBox offer-textarea">
+                                            {{ form.comment }}
+                                            <span class="offer-text">Дополнительный комментарий</span>
+                                            <span class="offer-line"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{ form.captcha }}
+                                <div class="offer-row100">
+                                    <div class="offer-col">
+                                        <input type="submit" value="Заказать">
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </section>
+            {% endif %}
+        </main>
+    {% endfor %}
+{% endblock content %}
+
+{% block end_div %}
+    {#    </div>#}
+{% endblock end_div %}
+
+{% block footer_name %}
+    <footer>
+{% endblock footer_name %}
+
+{% block fix %}
+    {% cache 86000 main_fix %}
+        <div class="social-fixed-d">
+            <div class="social-fixed">
+                <a title="Инстаграм" target="_blank" href="https://www.instagram.com/sviatlana_haurylavets"><i
+                        class="fab fa-instagram"></i></a>
+                <a title="Группа VK" target="_blank" href="https://vk.com/club134565385"><i class="fab fa-vk"></i></a>
+                <!--    <a href="tel:+375291234567"><i class="fas fa-phone-alt"></i></a>-->
+            </div>
+        </div>
+    {% endcache %}
+{% endblock fix %}
+
+{% block scripts %}
+    {% cache 1800 main_scripts %}
+        <script src="{% static 'scripts/lazysizes.min.js' %}"></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script src="{% static 'scripts/script.js' %}"></script>
+    {% endcache %}
+{% endblock scripts %}

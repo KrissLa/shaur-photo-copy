@@ -1,0 +1,179 @@
+<!-- Подключение базового шаблона -->
+{% extends 'base.html' %}
+<!-- Для подключение деректории static -->
+
+{% load i18n %}
+{% load account socialaccount %}
+{% load static recaptcha3 %}
+{% load cache %}
+<!-- Meta данные -->
+{% block meta %}
+    {% for seo_rev in view.get_seo_rev %}
+        <title>{{ seo_rev.SEO_title }}</title>
+        <meta name="description" content="{{ seo_rev.SEO_description }}">
+    {% endfor %}
+    <meta property="og:title" content="Отзывы | Фотограф Светлана Гавриловец"/>
+    <meta property="og:url" content="{% url 'review_list' %}"/>
+    <meta property="og:image" content="https://sun9-44.userapi.com/c854124/v854124924/2184dc/dAPsil5XX4s.jpg"/>
+    <meta property="og:image:secure_url"
+          content="https://sun9-44.userapi.com/c854124/v854124924/2184dc/dAPsil5XX4s.jpg"/>
+    <meta property="og:image:type" content="image/jpeg"/>
+{% endblock meta %}
+{% block seo %}
+{% endblock seo %}
+<!-- Подключение стилей -->
+{% block style %}
+    {% cache 86000 rev_style %}
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    {% endcache %}
+    {% recaptcha_init %}
+    {% recaptcha_ready action_name='homepage' %}
+{% endblock style %}
+
+{% block review_pc %}
+    li-active
+{% endblock review_pc %}
+
+{% block review %}
+    li-active
+{% endblock review %}
+
+{% block div_grid %}
+    <div class="grid-albums-list">
+{% endblock div_grid %}
+
+{% block header %}
+    <header class="a-l-header places-header">
+        <h1>
+            <span>о</span><span>т</span><span>з</span><span>ы</span><span>в</span><span>ы</span>
+        </h1>
+    </header>
+{% endblock header %}
+
+{% block content %}
+    <main class="a-l-main">
+        <section class="a-l-s-albums">
+            <div class="reviews-tabs" id="reviews-t" data-ft style="display: none;">
+                <nav class="a-l-photography-nav places-nav reviews-nav">
+                    <a href="#reviews" class="ph-name-nav active">Отзывы</a>
+                    <a href="#feedback" class="ph-name-nav">Оставить отзыв</a>
+                </nav>
+
+                <div class="a-l-photography-content">
+                    <section id="reviews" class="a-l-s-albums price">
+                        <div class="blog-list-div">
+                            {% for review in review_list %}
+
+                                <div data-aos="fade-up" data-aos-offset="20" data-aos-duration="1500"
+                                     class="blog-list-post reviews-post">
+                                    <div class="rev-content">
+                                        <img data1-src="images/icons/quote.png" class="quote">
+                                        <p class="reviews-date">{{ review.created }}</p>
+                                        <p>{{ review.review_body }}</p>
+                                        <img src="{{ review.author.socialaccount_set.all.0.get_avatar_url }}"
+                                             class="rev-user">
+                                        <h3>{{ review.author.first_name }} {{ review.author.last_name }}</h3>
+                                    </div>
+                                </div>
+                            {% empty %}
+                                <div class="places-empty">
+                                    <h2>Отзывов пока нет. Вы можете оставить первый :)</h2>
+                                </div>
+
+                            {% endfor %}
+
+
+                        </div>
+                    </section>
+                    <div id="feedback" class="offer-body">
+                        {% if user.is_authenticated %}
+                            <div class="offer-container">
+
+                                <div class="rev_login_hello">
+                                    <p>{{ user.first_name|capfirst }}, Вы успешно авторизованы, и можете
+                                        оставить отзыв</p>
+                                    <form method="post" action="{% url 'account_logout' %}">
+                                        {% csrf_token %}
+                                        {% if redirect_field_value %}
+                                            <input type="hidden" name="{{ redirect_field_name }}"
+                                                   value="{{ redirect_field_value }}"/>
+                                        {% endif %}
+                                        <button id="button-logout" type="submit">{% trans 'Sign Out' %}</button>
+                                        <label class="button-logout-label" for="button-logout">Выйти</label>
+                                    </form>
+                                </div>
+                                <form action="{% url 'add_review' %}" method="post">
+                                    {% csrf_token %}
+                                    <div class="offer-row100">
+                                        <div class="offer-col">
+                                            <div class="offer-inputBox offer-textarea">
+                                                {{ form.review_body }}
+                                                <span class="offer-text">Здесь можно написать отзыв</span>
+                                                <span class="offer-line"></span>
+                                            </div>
+                                            {{ form.captcha }}
+                                        </div>
+                                    </div>
+                                    <div class="offer-row100">
+                                        <div class="offer-col">
+                                            <input type="submit" value="Отправить отзыв">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        {% else %}
+                            <div class="offer-container">
+                                <div class="rev_login_hello">
+                                    <p>В целях защиты от накрутки, для того, чтобы оставить отзыв, пожалуйста,
+                                        авторизуйтесь через одну из социальных сетей</p>
+                                    {% get_providers as socialaccount_providers %}
+
+                                    {% if socialaccount_providers %}
+                                        <div class="socialaccount_ballot">
+                                            <ul class="socialaccount_providers">
+                                                {% include "include/provider_list.html" with process="login" %}
+                                            </ul>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock content %}
+
+
+{% block fix %}
+    {% cache 86000 rev_fix %}
+        <div class="social-fixed-a-l">
+            <div class="social-fixed">
+                <a title="Инстаграм" target="_blank" href="https://www.instagram.com/sviatlana_haurylavets"><i
+                        class="fab fa-instagram"></i></a>
+                <a title="Группа VK" target="_blank" href="https://vk.com/club134565385"><i class="fab fa-vk"></i></a>
+                <!--    <a href="tel:+375291234567"><i class="fas fa-phone-alt"></i></a>-->
+            </div>
+        </div>
+        <div class="reviews-s-f-a-l">
+            <div class="social-fixed-rev">
+                <a href="{% url 'offer_ph' %}" class="offer-ph-fix">Заказать фотосъёмку</a>
+                <a href="https://vk.com/topic-134565385_35253217" target="_blank" class="offer-ph-fix">Отзывы в группе
+                    ВК</a>
+            </div>
+        </div>
+    {% endcache %}
+{% endblock fix %}
+
+{% block scripts %}
+    {% cache 86000 rev_scripts %}
+        <script src="{% static 'scripts/tabs.js' %}"></script>
+        <script type="text/javascript">
+            $('.reviews-tabs').flexTabs();
+        </script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script src="{% static 'scripts/script.js' %}"></script>
+    {% endcache %}
+{% endblock scripts %}

@@ -1,0 +1,208 @@
+<!-- Подключение базового шаблона -->
+{% extends 'base.html' %}
+<!-- Для подключение деректории static -->
+{% load static recaptcha3 %}
+{% load cache %}
+<!-- Meta данные -->
+{% block meta %}
+
+    {% for seo_pl in view.get_seo_places %}
+        <title>{{ seo_pl.SEO_title }}</title>
+        <meta name="description" content="{{ seo_pl.SEO_description }}">
+    {% endfor %}
+    <meta property="og:title" content="Красивые места для фотосъёмок | Фотограф Светлана Гавриловец"/>
+    <meta property="og:url" content="{% url 'places_list' %}"/>
+    <meta property="og:image" content="https://sun9-44.userapi.com/c854124/v854124924/2184dc/dAPsil5XX4s.jpg"/>
+    <meta property="og:image:secure_url" content="https://sun9-44.userapi.com/c854124/v854124924/2184dc/dAPsil5XX4s.jpg"/>
+    <meta property="og:image:type" content="image/jpeg"/>
+{% endblock meta %}
+{% block seo %}
+{% endblock seo %}
+<!-- Подключение стилей -->
+{% block style %}
+    {% recaptcha_init %}
+    {% recaptcha_ready action_name='homepage' %}
+{% endblock style %}
+
+
+{% block place_pc %}
+    li-active
+{% endblock place_pc %}
+
+{% block place %}
+    li-active
+{% endblock place %}
+
+{% block div_grid %}
+    <div class="grid-albums-list">
+{% endblock div_grid %}
+
+{% block header %}
+    <header class="a-l-header places-header">
+        <h1>
+            <span>к</span><span>р</span><span>а</span><span>с</span><span>и</span><span>в</span><span>ы</span><span>е</span><span>&ensp; </span>
+            <span>м</span><span>е</span><span>с</span><span>т</span><span>а</span>
+        </h1>
+    </header>
+{% endblock header %}
+
+{% block content %}
+    <main class="a-l-main">
+        <section class="a-l-s-albums">
+            <div class="places-tabs" id="places-t" data-ft style="display: none;">
+                {% if new_place %}
+                    <p class="new_place">Спасибо за помощь в собирание коллекции! Предложенное Вами место будет
+                        отображено на
+                        сайте после модерации.</p>
+                {% endif %}
+
+                <nav class="a-l-photography-nav places-nav">
+                    <a href="#collection" class="ph-name-nav active">Коллекция</a>
+                    <a href="#offer" class="ph-name-nav">Предложить место</a>
+                </nav>
+
+                <div class="a-l-photography-content">
+                    <section id="collection" class="velo-slides" data-velo-slider="on" data-velo-theme="light">
+
+                        {% for place in place_list_1 %}
+
+                            <!-- Slide -->
+                            <section class="velo-slide">
+                                <!-- Slide BG -->
+                                <div class="velo-slide__bg">
+                                    <!-- Borders -->
+                                    <span class="border"><span></span></span> <!-- Img -->
+                                    <figure class="velo-slide__figure"
+                                    ><img class="lazyload place-pc" data-src="{{ place.photo.url }}"
+                                          src="{{ place.photo.small.url }}">
+                                    <img class="lazyload place-tel" data-src="{{ place.photo.medium.url }}"
+                                          src="{{ place.photo.small.url }}"></figure>
+                                </div>
+
+                                <!-- Header -->
+                                <header class="velo-slide__header">
+                                    <h3 class="velo-slide__title"><span
+                                            class="oh"><span>{{ place.sity }}. {{ place.title }}</span></span>
+                                    </h3>
+                                    <p class="velo-slide__text"><span class="oh"><span>{{ place.description }}
+                                    <br>{% if place.user_name %}Предложил:
+                                            {{ place.user_name }}{% endif %}</span></span>
+                                    </p>
+                                    <span class="velo-slide__btn"><a target="_blank" class="btn-draw btn--white"
+                                                                     href="{{ place.url_map }}"><span
+                                            class="btn-draw__text"><span>Показать на карте</span></span></a></span>
+                                </header>
+                            </section>
+                        {% empty %}
+                            <div class="places-empty">
+                                <h2>Раздел пуст. Места для фотосъёмок будут добавлены в ближайшее время</h2>
+                            </div>
+
+
+                        {% endfor %}
+
+                        <!-- Slides Nav -->
+                        <nav class="velo-slides-nav">
+                            <ul class="velo-slides-nav__list">
+                                <li>
+                                    <a class="js-velo-slides-prev velo-slides-nav__prev inactive" href="#0"><i
+                                            class="icon-up-arrow"></i></a>
+                                </li>
+                                <li>
+                                    <a class="js-velo-slides-next velo-slides-nav__next" href="#0"><i
+                                            class="icon-down-arrow"></i></a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </section>
+                    <div id="offer" class="offer-body">
+                        <div class="offer-container">
+                            <form action="{% url 'add_place' %}" enctype="multipart/form-data"
+                                  method="post">
+                                {% csrf_token %}
+                                <div class="offer-row100">
+                                    <div class="offer-col">
+                                        <div class="offer-inputBox">
+                                            {{ form.user_name }}
+                                            <span class="offer-text">Ваше имя (Будет отображено на сайте)</span>
+                                            <span class="offer-line"></span>
+                                        </div>
+                                    </div>
+                                    <div class="offer-col">
+                                        <div class="offer-inputBox">
+                                            {{ form.photo }}
+                                            <label for="photo_inp">
+                                                <span class="offer-text">Выбрать фотографию</span>
+                                                <span class="offer-line"></span>
+                                            </label>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="offer-row100">
+                                    <div class="offer-col">
+                                        <div class="offer-inputBox">
+                                            {{ form.sity }}
+                                            <span class="offer-text">Город</span>
+                                            <span class="offer-line"></span>
+                                        </div>
+                                    </div>
+                                    <div class="offer-col">
+                                        <div class="offer-inputBox">
+                                            {{ form.title }}
+                                            <span class="offer-text">Как назвать место?</span>
+                                            <span class="offer-line"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="offer-row100">
+                                    <div class="offer-col">
+                                        <div class="offer-inputBox">
+                                            {{ form.url_map }}
+                                            <span class="offer-text">Адрес или ссылка на карте</span>
+                                            <span class="offer-line"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="offer-row100">
+                                    <div class="offer-col">
+                                        <div class="offer-inputBox offer-textarea">
+                                            {{ form.description }}
+                                            <span class="offer-text">Короткое описание</span>
+                                            <span class="offer-line"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{ form.captcha }}
+                                <div class="offer-row100">
+                                    <div class="offer-col">
+                                        <input type="submit" value="Отправить">
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+{% endblock content %}
+
+{% block scripts %}
+    {% cache 86000 place_list_scripts %}
+        <script src="{% static 'scripts/lazysizes.min.js' %}"></script>
+        <script src="{% static 'scripts/tabs.js' %}"></script>
+        <script type="text/javascript">
+            $('.places-tabs').flexTabs();
+        </script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.0/velocity.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.0/velocity.ui.js'></script>
+        <script src="{% static 'scripts/places_detail.js' %}"></script>
+        <script src="{% static 'scripts/script.js' %}"></script>
+    {% endcache %}
+{% endblock scripts %}

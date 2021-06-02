@@ -1,0 +1,84 @@
+<!-- Подключение базового шаблона -->
+{% extends 'base.html' %}
+<!-- Для подключение деректории static -->
+{% load static %}
+{% load cache %}
+<!-- Meta данные -->
+{% block meta %}
+    {% for seo_bl in view.get_seo_blog %}
+        <title>{{ seo_bl.SEO_title }}</title>
+        <meta name="description" content="{{ seo_bl.SEO_description }}">
+    {% endfor %}
+    <meta property="og:title" content="Блог | Фотограф Светлана Гавриловец"/>
+    <meta property="og:url" content="{% url 'post_list' %}"/>
+    <meta property="og:image" content="https://sun9-44.userapi.com/c854124/v854124924/2184dc/dAPsil5XX4s.jpg"/>
+    <meta property="og:image:secure_url"
+          content="https://sun9-44.userapi.com/c854124/v854124924/2184dc/dAPsil5XX4s.jpg"/>
+    <meta property="og:image:type" content="image/jpeg"/>
+{% endblock meta %}
+{% block seo %}
+{% endblock seo %}
+<!-- Подключение стилей -->
+{% block style %}
+    {% cache 86000 b-l-style %}
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    {% endcache %}
+{% endblock style %}
+
+
+{% block blog_pc %}
+    li-active
+{% endblock blog_pc %}
+
+{% block blog %}
+    li-active
+{% endblock blog %}
+{% block div_grid %}
+    <div class="grid-albums-list blog-list-grid">
+{% endblock div_grid %}
+
+
+{% block header %}
+    <header class="a-l-header blog-header">
+        <h1><span>Б</span><span>л</span><span>о</span><span>г</span></h1>
+    </header>
+{% endblock header %}
+
+{% block content %}
+    <main class="a-l-main">
+        <section class="a-l-s-albums price">
+            <div class="blog-list-div">
+                {% for post in post_list %}
+                    <div data-aos="fade-up" data-aos-offset="20" data-aos-duration="1500"
+                         class="blog-list-post">
+                        <div class="blog-list-post-img">
+                            <img class="lazyload" data-src="{{ post.small_image.medium.url }}"
+                                 src="{{ post.small_image.small.url }}" alt="{{ post.small_image_alt }}"
+                                 title="{{ post.small_image_title }}">
+                        </div>
+                        <div class="blog-list-post-body">
+                            <h2>{{ post.name }}</h2>
+                            <p class="blog-list-post-text">
+                                {{ post.short_description }}
+                            </p>
+                            <div class="blog-list-post-a">
+                                <a href="{{ post.get_absolute_url }}">Читать статью</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </section>
+    </main>
+{% endblock content %}
+
+
+
+{% block scripts %}
+    {% cache 86000 b-l-scripts %}
+        <script src="{% static 'scripts/lazysizes.min.js' %}"></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script src="{% static 'scripts/script.js' %}"></script>
+    {% endcache %}
+{% endblock scripts %}

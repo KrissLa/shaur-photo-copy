@@ -1,0 +1,71 @@
+<!-- Подключение базового шаблона -->
+{% extends 'base.html' %}
+<!-- Для подключение деректории static -->
+
+{% load i18n %}
+{% load account socialaccount %}
+{% load static %}
+<!-- Meta данные -->
+{% block meta %}
+    <title>Ваш отзыв успешно добавлен!</title>
+    <meta name="description" content="Ваш отзыв успешно добавлен!">
+{% endblock meta %}
+{% block seo %}
+{% endblock seo %}
+<!-- Подключение стилей -->
+{% block style %}
+
+{% endblock style %}
+
+{% block reviews_pc %}
+    li-active
+{% endblock reviews_pc %}
+
+{% block reviews %}
+    li-active
+{% endblock reviews %}
+
+
+
+{% block header %}
+
+    <div class="rev-add-container">
+        <div class="rev_login_hello">
+            <p>Ваш отзыв успешно добавлен! Спасибо!</p>
+
+        </div>
+        <div class="add_nav">
+            <a href="{% url 'review_list' %}">Вернуться к отзывам</a>
+            <a href="{% url 'main' %}">На главную</a>
+        </div>
+    </div>
+
+
+
+{% endblock header %}
+
+
+{% block fix %}
+    <div class="social-fixed-a-l">
+        <div class="social-fixed">
+            <a href="https://www.instagram.com/sviatlana_haurylavets" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://vk.com/club134565385" target="_blank"><i class="fab fa-vk"></i></a>
+            <!--    <a href="tel:+375291234567"><i class="fas fa-phone-alt"></i></a>-->
+        </div>
+    </div>
+    <div class="reviews-s-f-a-l">
+        <div class="social-fixed-rev">
+            <a href="{% url 'offer_ph' %}" class="offer-ph-fix">Заказать фотосъёмку</a>
+            <a href="https://vk.com/topic-134565385_35253217" target="_blank" class="offer-ph-fix">Отзывы в группе ВК</a>
+        </div>
+    </div>
+{% endblock fix %}
+
+{% block scripts %}
+    <script src="{% static 'scripts/tabs.js' %}"></script>
+    <script type="text/javascript">
+        $('.reviews-tabs').flexTabs();
+    </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="{% static 'scripts/script.js' %}"></script>
+{% endblock scripts %}

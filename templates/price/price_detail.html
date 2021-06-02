@@ -1,0 +1,122 @@
+<!-- Подключение базового шаблона -->
+{% extends 'base.html' %}
+<!-- Для подключение деректории static -->
+{% load static %}
+{% load cache %}
+<!-- Meta данные -->
+{% block meta %}
+    <title>{{ price.SEO_title }}</title>
+    <meta name="description" content="{{ price.SEO_description }}">
+    <meta property="og:title" content="{{ price.name }} | Фотограф Светлана Гавриловец"/>
+    <meta property="og:url" content="https://shaur-photo.com{{ price.get_absolute_url }}"/>
+    <meta property="og:image" content="https://shaur-photo.com{{ price.image.url }}"/>
+    <meta property="og:image:secure_url" content="https://secure.shaur-photo.com{{ price.image.url }}"/>
+    <meta property="og:image:type" content="image/jpeg"/>
+{% endblock meta %}
+{% block seo %}
+{% endblock seo %}
+<!-- Подключение стилей -->
+{% block style %}
+    {% cache 86000 price_det_style %}
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    {% endcache %}
+{% endblock style %}
+
+
+
+{% block price_pc %}
+    li-active
+{% endblock price_pc %}
+
+{% block price %}
+    li-active
+{% endblock price %}
+
+{% block header %}
+    <header class="a-d-header">
+        <h1>{{ price.name }}</h1>
+    </header>
+{% endblock header %}
+
+{% block content %}
+    <main class="a-d-main price-detail-main">
+        {% cache 86000 price_det_small %}
+            <small class="a-d-small">
+
+                <div class="share-album order-price">
+
+                    <h4>Заказать фотосъёмку: </h4>
+                    <div title="Инстаграм" class="share-album-mail"><a target="_blank"
+                                                                       href="https://www.instagram.com/sviatlana_haurylavets"><i
+                            class="fab fa-instagram"></i></a></div>
+                    <div title="Группа VK" class="share-album-vk pc"><a target="_blank"
+                                                                        href="https://vk.com/club134565385"><i
+                            class="fab fa-vk"></i></a>
+                    </div>
+                    <div class="share-album-vk a-tel"><a href="vk://vk.com/club134565385"><i class="fab fa-vk"></i></a>
+                    </div>
+                    <div title="Страничка VK" class="share-album-vk pc"><a target="_blank"
+                                                                           href="https://vk.com/mischkova"><i
+                            class="fab fa-vk"></i></a>
+                    </div>
+                    <div class="share-album-vk a-tel"><a href="vk://vk.com/mischkova"><i class="fab fa-vk"></i></a>
+                    </div>
+                </div>
+
+            </small>
+        {% endcache %}
+        <div class="price-d-body">
+            <div class="price-d-b-con">
+                {% for price_tar in price.tariff_set.all %}
+                    <div class="price-tarif">
+                        <h3>{{ price_tar.name }}</h3>
+                        <ul class="price-tarif-detail">
+                            {% for tariffs in price_tar.get_tariff_li %}
+                                <li data-aos="fade-up"
+                                    data-aos-offset="20">{{ tariffs.paragraph }}
+                                </li>
+                            {% endfor %}
+
+                        </ul>
+                        <div class="price-tarif-sum">
+                            <div data-aos="fade-up" data-aos-offset="20"
+                                 class="p-t-sum">{{ price_tar.price_sum }}</div>
+                            <div data-aos="fade-up" data-aos-offset="20" class="p-t-order"><a
+                                    href="{% url 'offer_ph' %}">Заказать</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </main>
+    <aside class="a-d-aside">
+        <div class="another-albums">
+            <nav class="another-albums-accordion">
+                <div class="ars-album-list1">
+                    <h4>Другие цены</h4>
+                    {% for price in view.get_price_list %}
+                        <div class="ars-panel price-d-u">
+                            <div class="ars-panel-heading price-d">
+                                <a href="{{ price.get_absolute_url }}">{{ price.name }}</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </nav>
+        </div>
+    </aside>
+{% endblock content %}
+
+
+
+{% block scripts %}
+    {% cache 86000 price_det_scripts %}
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script src="{% static 'scripts/script.js' %}"></script>
+    {% endcache %}
+{% endblock scripts %}

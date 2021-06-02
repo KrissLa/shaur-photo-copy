@@ -1,0 +1,722 @@
+<!-- Подключение базового шаблона -->
+{% extends 'base.html' %}
+<!-- Для подключение деректории static -->
+{% load static recaptcha3 %}
+{% load cache %}
+<!-- Meta данные -->
+{% block meta %}
+    {% for seo in main_list %}
+        <title>{{ seo.SEO_title }}</title>
+        <meta name="description" content="{{ seo.SEO_description }}">
+    {% endfor %}
+    <meta property="og:title" content="SHAUR-PHOTO.COM | Фотограф Светлана Гавриловец"/>
+    <meta property="og:url" content="https%3A%2F%2Fshaur-photo.com"/>
+    <meta property="og:image" content="https://sun9-44.userapi.com/c854124/v854124924/2184dc/dAPsil5XX4s.jpg"/>
+    <meta property="og:image:secure_url"
+          content="https://sun9-44.userapi.com/c854124/v854124924/2184dc/dAPsil5XX4s.jpg"/>
+    <meta property="og:image:type" content="image/jpeg"/>
+
+{% endblock meta %}
+{% block seo %}
+{% endblock seo %}
+<!-- Подключение стилей -->
+{% block style %}
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    {% recaptcha_init %}
+    {% recaptcha_ready action_name='homepage' %}
+{% endblock style %}
+
+{% block body_name %}
+    <body>
+{% endblock body_name %}
+
+{% block main_pc %}
+    li-active
+{% endblock main_pc %}
+
+{% block main %}
+    li-active
+{% endblock main %}
+
+{% block div_grid %}
+    {#    <div class="grid-albums-detail">#}
+{% endblock div_grid %}
+
+
+{% block header %}
+    <header class="header-index">
+        {#        <h2>#}
+        {#            <span class="neon_text" data-text="Д">Д</span><span class="neon_text" data-text="О">О</span><span#}
+        {#                class="neon_text" data-text="Б">Б</span><span class="neon_text" data-text="Р">Р</span><span#}
+        {#                class="neon_text" data-text="О">О</span><span> </span>#}
+        {#            <span class="neon_text" data-text="П">П</span><span class="neon_text" data-text="О">О</span><span#}
+        {#                class="neon_text" data-text="Ж">Ж</span><span class="neon_text" data-text="А">А</span><span#}
+        {#                class="neon_text" data-text="Л">Л</span><span class="neon_text" data-text="О">О</span><span#}
+        {#                class="neon_text" data-text="В">В</span><span class="neon_text" data-text="А">А</span><span#}
+        {#                class="neon_text" data-text="Т">Т</span><span class="neon_text" data-text="Ь">Ь</span>#}
+        {#            <span> </span><span class="neon_text" data-text="В">В</span><span></span>#}
+        {#            <span class="neon_text" data-text="М">М</span><span class="neon_text" data-text="О">О</span><span#}
+        {#                class="neon_text" data-text="Й">Й</span><span> </span>#}
+        {#            <span class="neon_text" data-text="Й">М</span><span class="neon_text" data-text="И">И</span><span#}
+        {#                class="neon_text" data-text="Р">Р</span><span class="neon_text" data-text="!">!</span>#}
+        {#        </h2>#}
+        {% cache 86000 main_header %}
+            <h1>
+                <span>S</span><span>H</span><span>A</span><span>U</span><span>R</span><span>-</span><span>P</span><span>H</span><span>O</span><span>T</span><span>O</span>
+            </h1>
+            <div class="neon-button">
+                <a class="header-inst" target="_blank" href="https://www.instagram.com/sviatlana_haurylavets">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Instagram
+                </a>
+                <div class="scrolldown">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <a class="header-vk pc" target="_blank" href="https://vk.com/club134565385">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Вконтакте
+                </a>
+                <a class="header-vk a-tel" href="vk://vk.com/club134565385">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Вконтакте
+                </a>
+            </div>
+        {% endcache %}
+    </header>
+{% endblock header %}
+
+{% block content %}
+    {% for main in main_list %}
+        <main>
+            {% if main.about %}
+                <section class="about-me-main">
+                    {% if main.about_background %}
+                        <img class="sw_ph-img-bg lazyload" data-src="{{ main.about_background.url }}"
+                             src="{{ main.about_background.small.url }}" {% if main.about_background_object_position %}
+                             style="object-position: {{ main.about_background_object_position }}"{% endif %}>
+                    {% else %}
+                        <img class="sw_ph-img-bg lazyload"
+                             data-src="{% static 'images/about/bg_about_1920_compr.jpg' %}"
+                             src="{% static 'images/about/bg_about_1920_compr_60WB72O.small.jpg' %}"
+                                {% if main.about_background_object_position %}
+                             style="object-position: {{ main.about_background_object_position }}"{% endif %}>
+                    {% endif %}
+                    {% if main.about_background_tel %}
+                        <img class="sw_ph-img-bg-tel lazyload" data-src="{{ main.about_background_tel.url }}"
+                             src="{{ main.about_background_tel.small.url }}"
+                                {% if main.about_background_object_position %}
+                             style="object-position: {{ main.about_background_object_position }}"{% endif %}>
+                    {% else %}
+                        <img class="sw_ph-img-bg-tel lazyload"
+                             data-src="{% static 'images/about/bg_about_1920_compr.jpg' %}"
+                             src="{% static 'images/about/bg_about_1920_compr_60WB72O.small.jpg' %}"
+                                {% if main.about_background_object_position %}
+                             style="object-position: {{ main.about_background_object_position }}"{% endif %}>
+                    {% endif %}
+                    <div class="about-content" data-aos="fade-up"
+                         data-aos-duration="700">
+                        <div class="about-text-img">
+                            <div class="about-circle"
+                                    {% if main.about_photo %}
+                                 style="background-image: url('{{ main.about_photo.url }}')"
+                                    {% endif %}>
+
+                            </div>
+                            <h2>{{ main.hello |safe }}</h2>
+                            <p>{{ main.about_body |safe }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="about-social">
+                        <ul
+                                class="sci-about">
+                            <li><a title="Инстаграм" target="_blank"
+                                   href="https://www.instagram.com/sviatlana_haurylavets"><i
+                                    class="fab fa-instagram"></i></a></li>
+                            <li class="pc"><a title="Группа VK" target="_blank" href="https://vk.com/club134565385"><i
+                                    class="fab fa-vk"></i></a></li>
+                            <li class="pc"><a title="Страничка VK" target="_blank" class="last-a-about"
+                                              href="https://vk.com/mischkova"><i
+                                    class="fab fa-vk"></i></a>
+                            </li>
+                            <li class="a-tel"><a href="vk://vk.com/club134565385"><i class="fab fa-vk"></i></a></li>
+                            <li class="a-tel"><a class="last-a-about" href="vk://vk.com/mischkova"><i
+                                    class="fab fa-vk"></i></a>
+                            </li>
+                        </ul>
+                        <a class="about-al-a" href="{% url 'albums_list' %}"
+                        >Альбомы</a>
+                    </div>
+                </section>
+
+            {% endif %}
+            {% if main.photography %}
+                <section class="photography">
+                    <div class="swiper-container sw-photography">
+                        <div class="swiper-wrapper">
+                            {% for ph in view.get_photography %}
+                                <div class="swiper-slide">
+                                    <img class="sw_ph-img-bg lazyload" data-src="{{ ph.image_bg.url }}"
+                                         src="{{ ph.image_bg.small.url }}"
+                                         alt="{{ ph.alt_bg }}">
+                                    <img class="sw_ph-img-bg-tel lazyload" data-src="{{ ph.image_bg_tel.url }}"
+                                         src="{{ ph.image_bg_tel.small.url }}"
+                                         alt="{{ ph.alt_bg }}">
+                                    <div class="sw-ph-content" data-aos="fade-up"
+                                         data-aos-duration="700">
+
+                                        <div class="sw-ph-container">
+                                            <div class="sw-ph-circle"
+                                                 style="background-image: url('{{ ph.image_min.url }}'); background-position: center center">
+
+                                            </div>
+                                            <h2>{{ ph.name }}</h2>
+                                            <p>
+                                                {{ ph.description }}
+                                            </p>
+                                            <nav class="sw-ph-nav">
+                                                <a href="{{ ph.get_absolute_url }}"
+                                                   class="sw-ph-a about-al-a">Альбомы</a>
+                                                {#                                    {% if ph.a_price %}#}
+                                                <a href="
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                        {% if ph.a_price %}{{ ph.a_price }}{% else %}{% url 'price_list' %}{% endif %}"
+                                                   class="sw-ph-a sw-ph-a2 about-al-a">Прайс</a>
+                                                {#                                    {% endif %}#}
+                                                <a href="{% url 'offer_ph' %}" class="sw-ph-a about-al-a">Заказать</a>
+
+                                            </nav>
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                            {% endfor %}
+                            <!-- Add Pagination -->
+
+                        </div>
+                        <div class="swiper-pagination"></div>
+                        <!-- Add Arrows -->
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+
+
+                </section>
+            {% endif %}
+
+
+            {% if main.last_album %}
+                {% for al in view.get_last_album %}
+                    <section class="last-album">
+                        <div class="container-last-al">
+                            <div class="la-section-title">
+                                <h3><a data-aos="fade-up"
+                                       data-aos-duration="700" href="{{ al.get_absolute_url }}">{{ al.name }}</a></h3>
+                            </div>
+                            <div class="swiper-container swiper_pc"
+                                 data-aos="fade-up"
+                                 data-aos-duration="700">
+                                <div class="swiper-wrapper">
+                                    {% for ph in al.get_last_albums_photo %}
+                                        {% for img in ph.get_photo_to_main %}
+                                            <div class="swiper-slide"><img class="lazyload"
+                                                                           data-src="{{ img.photo.ag2.url }}"
+                                                                           src="{{ img.photo.small.url }}"></div>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </div>
+                                {#                                <!-- Add Pagination -->#}
+                                {#                                <div class="swiper-pagination"></div>#}
+                                <!-- Add Arrows -->
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                            </div>
+                            {#                        {% cache 86000 main_swiper_body %}#}
+
+
+                            {#                        {% endcache %}#}
+                            <div class="swiper-container swiper_tel">
+                                <div class="swiper-wrapper">
+                                    {% for ph in al.get_last_albums_photo %}
+                                        {% for img in ph.get_photo_to_main %}
+                                            <div class="swiper-slide"><img class="lazyload"
+                                                                           data-src="{{ img.photo.ag2.url }}"
+                                                                           src="{{ img.photo.small.url }}"></div>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </div>
+                                <!-- Add Arrows -->
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                            </div>
+
+
+                            <div class="neon-button neon-button-swiper-not-abs">
+                                <a class="full-album" href="{{ al.get_absolute_url }}">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    К альбому
+                                </a>
+
+                                <a class="all-albums" href="{% url 'albums_list' %}">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    ВСе альбомы
+                                </a>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </section>
+                {% empty %}
+                {% endfor %}
+            {% endif %}
+
+            {% if main.reviews %}
+                <section class="reviews">
+                    {% if main.reviews_background %}
+                        <img class="sw_ph-img-bg sw_ph-img-bg_no_tel lazyload"
+                             data-src="{{ main.reviews_background.url }}"
+                             src="{{ main.reviews_background.small.url }}">
+                    {% endif %}
+                    <div class="container-rev">
+                        {% for rev in view.get_reviews %}
+                            <div class="rev-box"
+                                 data-aos="fade-up"
+                                 data-aos-duration="700">
+                                <div class="rev-content">
+                                    <img data1-src="{% static 'images/icons/quote.png' %}" class="quote">
+                                    <p>{{ rev.review_body }}</p>
+                                    <img data1-src="{{ rev.author.socialaccount_set.all.0.get_avatar_url }}"
+                                         class="rev-user">
+                                    <h3>{{ rev.author.first_name }} {{ rev.author.last_name }}</h3>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% cache 86000 neon_button_rev %}
+                        <div class="neon-button neon-button-swiper neon-button-rev">
+                            <a data-aos="fade-up"
+                               data-aos-duration="700"
+                               data-aos-offset="50"
+                               class="full-album" href="{% url 'review_list' %}">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                Перейти к отзывам
+                            </a>
+
+                            <a data-aos="fade-up"
+                               data-aos-duration="700"
+                               data-aos-offset="50"
+                               class="all-albums" href="{% url 'review_list' %}#reviews-t=feedback">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                Оставить отзыв
+                            </a>
+                        </div>
+                    {% endcache %}
+                </section>
+            {% endif %}
+
+
+            {% if main.blog %}
+                <section class="new-blog"
+                         {% if main.blog_background %}style="background-image: url({{ main.blog_background.url }})"
+                         {% else %}style="background-image: url({% static 'images/blog/blog_bg.jpg' %})"{% endif %}>
+                    <div class="blog-container">
+
+                        <div class="sw-ph-content-pc">
+                            {% for post in view.get_post_2 %}
+                                <div class="sw-ph-container" data-aos="fade-up"
+                                     data-aos-duration="700">
+                                    <div class="sw-ph-circle blog-circle"
+                                         style="background-image: url({{ post.small_image.url }}); background-position: 0 50%">
+
+                                    </div>
+                                    <h2>{{ post.name }}</h2>
+                                    <p>
+                                        {{ post.short_description }}
+                                    </p>
+                                    <nav class="sw-ph-nav">
+                                        <a href="{{ post.get_absolute_url }}"
+                                           class="sw-ph-a about-al-a">Читать статью</a>
+                                        <a href="{% url 'post_list' %}"
+                                           class="sw-ph-a sw-ph-a2 about-al-a">Блог</a>
+                                    </nav>
+
+                                </div>
+
+                            {% endfor %}
+                        </div>
+
+                        {% for post in view.get_post %}
+                            <div class="sw-ph-content-tel">
+
+                                <div class="sw-ph-container" data-aos="fade-up"
+                                     data-aos-duration="700">
+                                    <div class="sw-ph-circle blog-circle"
+                                         style="background-image: url({{ post.small_image.url }}); background-position: 0 50%">
+
+                                    </div>
+                                    <h2>{{ post.name }}</h2>
+                                    <p>{{ post.short_description }}
+                                    </p>
+                                    <nav class="sw-ph-nav">
+                                        <a href="{{ post.get_absolute_url }}"
+                                           class="sw-ph-a about-al-a">Читать статью</a>
+                                        <a href="{% url 'post_list' %}"
+                                           class="sw-ph-a sw-ph-a2 about-al-a">Блог</a>
+
+
+                                    </nav>
+
+                                </div>
+
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            {% endif %}
+
+            {% if main.place %}
+                {#                {% cache 1800 places_ %}#}
+                <section class="places">
+                    <div class="places-text">
+
+                        <h2>
+                <span data-aos="zoom-in"
+                      data-aos-offset="200"
+                      data-aos-duration="700"
+                      class="word">Я</span>
+                            <span data-aos="zoom-in"
+                                  data-aos-offset="200"
+                                  data-aos-duration="700"
+                                  data-aos-delay="50"
+                                  class="word">собираю</span>
+                            <span data-aos="zoom-in"
+                                  data-aos-offset="200"
+                                  data-aos-duration="700"
+                                  data-aos-delay=100"
+                                  class="word">свою</span>
+                            <span data-aos="zoom-in"
+                                  data-aos-offset="200"
+                                  data-aos-duration="700"
+                                  data-aos-delay="150"
+                                  class="word">коллекцию</span>
+                            <span data-aos="zoom-in"
+                                  data-aos-offset="200"
+                                  data-aos-duration="700"
+                                  data-aos-delay="200"
+                                  class="word">с</span>
+                            <span data-aos="zoom-in"
+                                  data-aos-offset="200"
+                                  data-aos-duration="700"
+                                  data-aos-delay="250"
+                                  class="word">красивыми</span>
+                            <span data-aos="zoom-in"
+                                  data-aos-offset="200"
+                                  data-aos-duration="700"
+                                  data-aos-delay="300"
+                                  class="word">местами</span>
+                            <span data-aos="zoom-in"
+                                  data-aos-offset="200"
+                                  data-aos-duration="700"
+                                  data-aos-delay="350"
+                                  class="word">для</span>
+                            <span data-aos="zoom-in"
+                                  data-aos-offset="200"
+                                  data-aos-duration="700"
+                                  data-aos-delay="400"
+                                  class="word">фото</span>
+                            <span data-aos="zoom-in"
+                                  data-aos-offset="200"
+                                  data-aos-duration="700"
+                                  data-aos-delay="450"
+                                  class="word">и</span>
+                            <span data-aos="zoom-in"
+                                  data-aos-offset="200"
+                                  data-aos-duration="700"
+                                  data-aos-delay="500"
+                                  class="word">Вы</span>
+                            <span data-aos="zoom-in"
+                                  data-aos-offset="200"
+                                  data-aos-duration="700"
+                                  data-aos-delay="550"
+                                  class="word">можете</span>
+                            <span data-aos="zoom-in"
+                                  data-aos-offset="200"
+                                  data-aos-duration="700"
+                                  data-aos-delay="600"
+                                  class="word">мне</span>
+                            <span data-aos="zoom-in"
+                                  data-aos-offset="200"
+                                  data-aos-duration="700"
+                                  data-aos-delay="650"
+                                  class="word">в</span>
+                            <span data-aos="zoom-in"
+                                  data-aos-offset="200"
+                                  data-aos-duration="700"
+                                  data-aos-delay="700"
+                                  class="word">этом</span>
+                            <span data-aos="zoom-in"
+                                  data-aos-offset="200"
+                                  data-aos-duration="700"
+                                  data-aos-delay="750"
+                                  class="word">помочь.</span>
+                        </h2>
+
+
+                    </div>
+
+                    <div class="places-box">
+                        <img data-src="{{ main.image_pl1.url }}" src="{{ main.image_pl1.small.url }}"
+                             class="mask1 lazyload" alt="{{ main.image_pl1_alt }}"
+                             title="{{ main.image_pl_title }}">
+                        <img data-src="{{ main.image_pl2.url }}" src="{{ main.image_pl2.small.url }}"
+                             class="mask2 lazyload" alt="{{ main.image_pl2_alt }}"
+                             title="{{ main.image_pl_title }}">
+                    </div>
+
+                    <div data-aos="fade-up"
+                         data-aos-duration="300"
+                         data-aos-offset="100"
+                         class="neon-button neon-button-swiper nb-places ">
+                        <a class="full-album" href="{% url 'places_list' %}">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            Посмотреть
+                        </a>
+
+                        <a class="all-albums" href="{% url 'places_list' %}#places-t=offer">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            предложить
+                        </a>
+                    </div>
+                </section>
+                {#                {% endcache %}#}
+            {% endif %}
+            {% if main.offer_ph %}
+                <section class="offer-main">
+                    <div class="offer-main-h">
+                        <h2>Заказать фотосъёмку</h2>
+                    </div>
+                    <div class="offer-div offer-main-div">
+                        <div class="offer-container">
+                            <form action="{% url 'add_offer' %}" method="post">
+                                {% csrf_token %}
+                                <div class="offer-row100 mar-75">
+                                    <p class="p-row100">
+                                        Пожалуйста, заполните форму и я перезвоню Вам в указанное Вами время для
+                                        подтверждения заказа и уточнения деталей в течении 24 часов.
+                                    </p>
+                                </div>
+                                <div class="offer-row100">
+                                    <div class="offer-col">
+                                        <div class="offer-inputBox">
+                                            {{ form.name }}
+                                            <span class="offer-text">Ваше имя</span>
+                                            <span class="offer-line"></span>
+                                        </div>
+                                    </div>
+                                    <div class="offer-col">
+                                        <div class="offer-inputBox">
+                                            {{ form.phone_number }}
+                                            <span class="offer-text">Номер телефона с кодом</span>
+                                            <span class="offer-line"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="offer-row100">
+                                    <p class="p-row100">
+                                        Пожалуйста, укажите период времени, в который я могу Вам перезвонить:
+                                    </p>
+                                </div>
+                                <div class="offer-row100">
+                                    <div class="offer-col">
+                                        {{ form.time_to_call_1 }}
+                                    </div>
+                                    <div class="offer-col">
+                                        {{ form.time_to_call_2 }}
+                                    </div>
+                                </div>
+
+                                <div class="offer-row100">
+                                    <div class="offer-col">
+                                        <div class="offer-inputBox">
+                                            {{ form.date_of_photography }}
+                                            <span class="offer-text">
+                                            <span class="offer-text-tel">Удобные для Вас даты</span>
+                                            <span
+                                                    class="offer-text-pc">
+                                                Желаемая дата фотосъёмки (одна или несколько в удобном для Вас формате)
+                                            </span>
+                                        </span>
+
+                                            <span class="offer-line"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="offer-row100">
+                                    <p class="p-row100">
+                                        Пожалуйста, выберите фотосъёмку:
+                                    </p>
+                                </div>
+                                <div class="offer-row100">
+                                    <div class="offer-col">
+                                        {{ form.photography }}
+                                    </div>
+                                </div>
+                                <div class="offer-row100">
+                                    <div class="offer-col">
+                                        <div class="offer-inputBox">
+                                            {{ form.сity }}
+                                            <span class="offer-text">Город</span>
+                                            <span class="offer-line"></span>
+                                        </div>
+                                    </div>
+                                    <div class="offer-col">
+                                        <div class="offer-inputBox offer-textarea">
+                                            {{ form.comment }}
+                                            <span class="offer-text">Дополнительный комментарий</span>
+                                            <span class="offer-line"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{ form.captcha }}
+                                <div class="offer-row100">
+                                    <div class="offer-col">
+                                        <input type="submit" value="Заказать">
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </section>
+            {% endif %}
+        </main>
+    {% endfor %}
+{% endblock content %}
+
+{% block end_div %}
+    {#    </div>#}
+{% endblock end_div %}
+
+{% block footer_name %}
+    <footer>
+{% endblock footer_name %}
+
+{% block fix %}
+    {% cache 86000 main_fix %}
+        <div class="social-fixed-d">
+            <div class="social-fixed">
+                <a title="Инстаграм" target="_blank" href="https://www.instagram.com/sviatlana_haurylavets"><i
+                        class="fab fa-instagram"></i></a>
+                <a title="Группа VK" target="_blank" href="https://vk.com/club134565385"><i class="fab fa-vk"></i></a>
+                <!--    <a href="tel:+375291234567"><i class="fas fa-phone-alt"></i></a>-->
+            </div>
+        </div>
+    {% endcache %}
+{% endblock fix %}
+
+{% block scripts %}
+        <script src="{% static 'scripts/lazysizes.min.js' %}"></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script src="{% static 'scripts/script.js' %}"></script>
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+        <script>
+            var swiper = new Swiper('.swiper-container.swiper_pc', {
+                slidesPerView: 3,
+                spaceBetween: 10,
+                slidesPerGroup: 1,
+                loop: false,
+                loopFillGroupWithBlank: true,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+        </script>
+        <!-- Initialize Swiper -->
+        <script>
+            var swiper = new Swiper('.swiper-container.swiper_tel', {
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+        </script>
+        <!-- Initialize Swiper -->
+        <script>
+            var swiper = new Swiper('.swiper-container.sw-photography', {
+                spaceBetween: 530,
+                centeredSlides: true,
+                autoplay: {
+                    delay: 10000,
+                    disableOnInteraction: true,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+        </script>
+
+{% endblock scripts %}

@@ -1,0 +1,120 @@
+<!-- Подключение базового шаблона -->
+{% extends 'base.html' %}
+<!-- Для подключение деректории static -->
+{% load static %}
+{% load cache %}
+<!-- Meta данные -->
+{% block meta %}
+    <title>{{ post.SEO_title }}</title>
+    <meta name="description" content="{{ post.SEO_description }}">
+    <meta property="og:title" content="{{ post.name }} | Фотограф Светлана Гавриловец"/>
+    <meta property="og:url" content="https%3A%2F%2Fshaur-photo.com{{ post.get_absolute_url }}"/>
+    <meta property="og:image" content="https://shaur-photo.com{{ post.small_image.url }}"/>
+    <meta property="og:image:secure_url" content="https://secure.shaur-photo.com{{ post.small_image.url }}"/>
+    <meta property="og:image:type" content="image/jpeg"/>
+{% endblock meta %}
+{% block seo %}
+{% endblock seo %}
+<!-- Подключение стилей -->
+{% block style %}
+    {% cache 86000 blog_style %}
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    {% endcache %}
+{% endblock style %}
+
+
+{% block blog_pc %}
+    li-active
+{% endblock blog_pc %}
+
+{% block blog %}
+    li-active
+{% endblock blog %}
+
+{% block div_grid %}
+    {#    <div class="grid-albums-detail">#}
+{% endblock div_grid %}
+
+
+{% block header %}
+    <header class="header-blog-d-bg" style="background-image: url('{{ post.image.url }}')">
+        <h1>{{ post.name }}</h1>
+    </header>
+{% endblock header %}
+
+{% block content %}
+    <section class="post-detail">
+        {{ post.post_body|safe }}
+        <div class="signature">
+            <h3 class="signature-h3">Ваш фотограф 📷 Светлана Гавриловец ❤️</h3>
+        </div>
+        <div class="share-album post">
+
+            <h4>Поделиться: </h4>
+
+            <div class="flex">
+                <div class="share-album-a"><a
+                        href="http://vk.com/share.php?url=https://shaur-photo.com{{ post.get_absolute_url }}"
+                        title="Вконтакте"
+                        onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                        target="_blank" rel="nofollow"><i class="fab fa-vk"></i></a></div>
+                <div class="share-album-a"><a title="Twitter"
+                                              href="https://twitter.com/share?url=https://shaur-photo.com{{ post.get_absolute_url }}"
+                                              onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                                              target="_blank" rel="nofollow"><i class="fab fa-twitter"></i></a></div>
+                <div class="share-album-a"><a title="Facebook"
+                                              href="https://www.facebook.com/sharer/sharer.php?u=https://shaur-photo.com{{ post.get_absolute_url }}"
+                                              onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                                              target="_blank" rel="nofollow"><i class="fab fa-facebook-square"></i></a>
+                </div>
+                <div class="share-album-a"><a title="Linkedin"
+                                              href="https://www.linkedin.com/shareArticle?mini=true&url=https://shaur-photo.com{{ post.get_absolute_url }}"
+                                              onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                                              target="_blank" rel="nofollow"><i class="fab fa-linkedin"></i></a></div>
+                <div class="share-album-a tel"><a title="Viber"
+                                                  href="https://api.addthis.com/oexchange/0.8/forward/viber/offer?url=https%3A%2F%2Fshaur-photo.com{{ post.get_absolute_url }}"
+                                                  onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                                                  target="_blank" rel="nofollow"><i class="fab fa-viber"></i></a></div>
+                <div class="share-album-a"><a title="Одноклассники"
+                                              href="https://api.addthis.com/oexchange/0.8/forward/odnoklassniki_ru/offer?url=https%3A%2F%2Fshaur-photo.com{{ post.get_absolute_url }}"
+                                              onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                                              target="_blank" rel="nofollow"><i class="fab fa-odnoklassniki-square"></i></a>
+                </div>
+                <div class="share-album-a"><a title="Telegram"
+                                              href="https://api.addthis.com/oexchange/0.8/forward/telegram/offer?url=https%3A%2F%2Fshaur-photo.com{{ post.get_absolute_url }}"
+                                              onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                                              target="_blank" rel="nofollow"><i class="fab fa-telegram"></i></a></div>
+                <div class="share-album-a tel"><a title="Whatsapp"
+                                                  href="https://api.addthis.com/oexchange/0.8/forward/whatsapp/offer?url=https%3A%2F%2Fshaur-photo.com{{ post.get_absolute_url }}"
+                                                  onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                                                  target="_blank" rel="nofollow"><i class="fab fa-whatsapp-square"></i></a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+{% endblock content %}
+
+{% block end_div %}
+    {#    </div>#}
+{% endblock end_div %}
+{% block footer_name %}
+    <footer class="a-l-footer blog-d-post">
+{% endblock footer_name %}
+
+
+{% block scripts %}
+    {% cache 86000 blog_scripts %}
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="{% static 'scripts/script.js' %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(window).scroll(function () {
+                $('.header-blog-d-bg').css('opacity', 1 -
+                    $(window).scrollTop() / 700)
+            })
+        })
+
+    </script>
+    {% endcache %}
+{% endblock scripts %}

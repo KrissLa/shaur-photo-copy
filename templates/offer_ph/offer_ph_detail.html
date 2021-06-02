@@ -1,0 +1,174 @@
+<!-- Подключение базового шаблона -->
+{% extends 'base.html' %}
+<!-- Для подключение деректории static -->
+{% load static recaptcha3%}
+{% load cache %}
+<!-- Meta данные -->
+{% block meta %}
+    {% for off in offer %}
+        <title>{{ off.SEO_title }}</title>
+        <meta name="description" content="{{ off.SEO_description }}">
+    {% endfor %}
+    <meta property="og:title" content="Как заказать фотосъёмку | Фотограф Светлана Гавриловец"/>
+    <meta property="og:url" content="{% url 'offer_ph' %}"/>
+    <meta property="og:image" content="https://sun9-44.userapi.com/c854124/v854124924/2184dc/dAPsil5XX4s.jpg"/>
+    <meta property="og:image:secure_url"
+          content="https://sun9-44.userapi.com/c854124/v854124924/2184dc/dAPsil5XX4s.jpg"/>
+    <meta property="og:image:type" content="image/jpeg"/>
+{% endblock meta %}
+{% block seo %}
+{% endblock seo %}
+<!-- Подключение стилей -->
+{% block style %}
+    {% recaptcha_init %}
+    {% recaptcha_ready action_name='homepage' %}
+{% endblock style %}
+
+{% block div_grid %}
+    <div class="grid-albums-detail how-offer">
+{% endblock div_grid %}
+
+
+{% block header %}
+    <header class="a-d-header">
+        <h1>Как заказать фотосъёмку?</h1>
+    </header>
+{% endblock header %}
+
+{% block content %}
+    {% for off in offer %}
+        <main class="a-d-main price-detail-main offer-main">
+            <div class="price-d-body offer-price-d-body">
+                <div class="price-d-b-con how-offer-d">
+                    <div class="how-offer-body">
+                        <p>{{ off.body }}</p>
+                        <ul>
+                            {% for li in offer_li_list %}
+                                <li class="h-o-vk pc"><a target="_blank"
+                                                         href="{{ li.a_soc_net }}">{{ li.anchor|safe }} </a>
+                                <li class="h-o-vk a-tel"><a href="{{ li.a_soc_net_tel }}">{{ li.anchor|safe }} </a>
+                                </li>
+
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="offer-div">
+                <div class="offer-container">
+                    <form action="{% url 'add_offer' %}" method="post">
+                        {% csrf_token %}
+                        <div class="offer-row100 mar-150">
+                            <p class="p-row100">
+                                Пожалуйста, заполните форму и я перезвоню Вам в указанное Вами время для
+                                подтверждения заказа и уточнения деталей в течении 24 часов.
+                            </p>
+                        </div>
+                        <div class="offer-row100">
+                            <div class="offer-col">
+                                <div class="offer-inputBox">
+                                    {{ form.name }}
+                                    <span class="offer-text">Ваше имя</span>
+                                    <span class="offer-line"></span>
+                                </div>
+                            </div>
+                            <div class="offer-col">
+                                <div class="offer-inputBox">
+                                    {{ form.phone_number }}
+                                    <span class="offer-text">Номер телефона с кодом</span>
+                                    <span class="offer-line"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="offer-row100">
+                            <p class="p-row100">
+                                Пожалуйста, укажите период времени, в который я могу Вам перезвонить:
+                            </p>
+                        </div>
+                        <div class="offer-row100">
+                            <div class="offer-col">
+                                {{ form.time_to_call_1 }}
+                            </div>
+                            <div class="offer-col">
+                                {{ form.time_to_call_2 }}
+                            </div>
+                        </div>
+
+                        <div class="offer-row100">
+                                <div class="offer-col">
+                                    <div class="offer-inputBox">
+                                        {{ form.date_of_photography }}
+                                        <span class="offer-text">
+                                            <span class="offer-text-tel">Удобные для Вас даты</span>
+                                            <span
+                                                    class="offer-text-pc">
+                                                Желаемая дата фотосъёмки (одна или несколько в удобном для Вас формате)
+                                            </span>
+                                        </span>
+
+                                        <span class="offer-line"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="offer-row100">
+                            <p class="p-row100">
+                                Пожалуйста, выберите фотосъёмку:
+                            </p>
+                        </div>
+                        <div class="offer-row100">
+                            <div class="offer-col">
+                                {{ form.photography }}
+                            </div>
+                        </div>
+                        <div class="offer-row100">
+                            <div class="offer-col">
+                                <div class="offer-inputBox">
+                                    {{ form.сity }}
+                                    <span class="offer-text">Город</span>
+                                    <span class="offer-line"></span>
+                                </div>
+                            </div>
+                            <div class="offer-col">
+                                <div class="offer-inputBox offer-textarea">
+                                    {{ form.comment }}
+                                    <span class="offer-text">Дополнительный комментарий</span>
+                                    <span class="offer-line"></span>
+                                </div>
+                            </div>
+                        </div>
+                        {{ form.captcha }}
+                        <div class="offer-row100">
+                            <div class="offer-col">
+                                <input type="submit" value="Заказать">
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </main>
+    {% endfor %}
+{% endblock content %}
+
+{% block fix %}
+    {% cache 86000 offer_fix %}
+        <div class="social-fixed-a-l">
+            <div class="social-fixed">
+                <a title="Инстаграм" target="_blank" href="https://www.instagram.com/sviatlana_haurylavets"><i
+                        class="fab fa-instagram"></i></a>
+                <a title="Группа VK" target="_blank" href="https://vk.com/club134565385"><i class="fab fa-vk"></i></a>
+                <!--    <a href="tel:+375291234567"><i class="fas fa-phone-alt"></i></a>-->
+            </div>
+        </div>
+    {% endcache %}
+{% endblock fix %}
+
+{% block scripts %}
+    {% cache 86000 offer_scripts %}
+        <script src="{% static 'scripts/script.js' %}"></script>
+    {% endcache %}
+{% endblock scripts %}

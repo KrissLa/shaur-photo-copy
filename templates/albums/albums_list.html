@@ -1,0 +1,140 @@
+<!-- Подключение базового шаблона -->
+{% extends 'base.html' %}
+<!-- Для подключение деректории static -->
+{% load static %}
+{% load cache %}
+<!-- Meta данные -->
+{% block meta %}
+    <title>{% if not photography %}
+        Все альбомы | Фотограф Светлана Гавриловец | SHAUR-PHOTO.com | 2020
+    {% else %}
+        {{ photography.seo_title }}
+    {% endif %}</title>
+    <meta name="description" content="{% if not photography %}
+        Все альбомы | Фотограф Светлана Гавриловец | SHAUR-PHOTO.com | 2020
+    {% else %}
+        {{ photography.seo_description }}
+    {% endif %}">
+    <meta property="og:title" content="{% if not photography %}
+        Все альбомы | Фотограф Светлана Гавриловец | SHAUR-PHOTO.com | 2020
+    {% else %}
+        {{ photography.seo_title }}
+    {% endif %}"/>
+    <meta property="og:url" content="{% url 'albums_list' %}"/>
+    <meta property="og:image" content="https://sun9-44.userapi.com/c854124/v854124924/2184dc/dAPsil5XX4s.jpg"/>
+    <meta property="og:image:secure_url"
+          content="https://sun9-44.userapi.com/c854124/v854124924/2184dc/dAPsil5XX4s.jpg"/>
+    <meta property="og:image:type" content="image/jpeg"/>
+{% endblock meta %}
+{% block seo %}
+{% endblock seo %}
+<!-- Подключение стилей -->
+{% block style %}
+
+{% endblock style %}
+
+
+
+{% block albums_pc %}
+    li-active
+{% endblock albums_pc %}
+
+{% block albums %}
+    li-active
+{% endblock albums %}
+
+
+
+{% block div_grid %}
+    <div class="grid-albums-list">
+{% endblock div_grid %}
+
+{% block header %}
+    <header class="a-l-header">
+        {% if not photography %}
+            <h1><span>а</span><span>л</span><span>ь</span><span>б</span><span>о</span><span>м</span><span>ы</span>
+            </h1>
+        {% else %}
+            <h1 class="photo-name"><span>{{ photography.name }}</span></h1>
+        {% endif %}">
+
+    </header>
+{% endblock header %}
+
+{% block content %}
+    <main class="a-l-main">
+        <section class="a-l-s-albums">
+            <div class="photography-tabs">
+                <nav class="a-l-photography-nav">
+                    <a href="{% url 'albums_list' %}" class="ph-name-nav {% if not photography %}
+                    active
+                     {% endif %}">Все альбомы</a>
+                    {% for p in photographies %}
+                        <a href="{{ p.get_absolute_url }}"
+                           class="ph-name-nav{% if photography.slug == p.slug %} active {% endif %}">
+                            {{ p.name }}
+                        </a>
+                    {% endfor %}
+                </nav>
+
+                <div class="a-l-photography-content">
+
+                    <div class="photography-albums">
+                        {% for album in albums %}
+                            <a href="{{ album.get_absolute_url }}" class="a-l-card">
+                                {% if album.was_published_recently %}
+                                    <div class="new_al">
+                                        NEW
+                                    </div>
+                                {% endif %}
+                                <div class="a-l-card-img">
+                                    <img class="lazyload" data-src="{{ album.poster.medium.url }}"
+                                         src="{{ album.poster.small.url }}" alt="test">
+                                </div>
+                                <h2 class="a-l-card-title">{{ album.name }}</h2>
+                            </a>
+
+                        {% empty %}
+                            <div class="albums-empty">
+                                <h2>Скоро здесь появятся альбомы. Вернитесь, пожалуйста, позже.</h2>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    {% for ph in view.get_photography_all %}
+                        <div class="photography-albums">
+                            {% for al in ph.get_albums %}
+                                <a href="{{ al.get_absolute_url }}" class="a-l-card">
+                                    {% if al.was_published_recently %}
+                                        <div class="new_al">
+                                            NEW
+                                        </div>
+                                    {% endif %}
+                                    <div class="a-l-card-img">
+                                        <img class="lazyload" data-src="{{ al.poster.medium.url }}"
+                                             src="{{ al.poster.small.url }}" alt="test">
+                                    </div>
+                                    <h2 class="a-l-card-title">{{ al.name }}</h2>
+                                </a>
+                            {% empty %}
+                                <div class="places-empty">
+                                    <h2>Скоро здесь появятся альбомы. Вернитесь, пожалуйста, позже.</h2>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+    </div>
+    </section>
+    </main>
+{% endblock content %}
+
+
+
+{% block scripts %}
+        <script src="{% static 'scripts/lazysizes.min.js' %}"></script>
+        <script src="{% static 'scripts/script.js' %}"></script>
+{% endblock scripts %}

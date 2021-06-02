@@ -1,0 +1,72 @@
+<!-- Подключение базового шаблона -->
+{% extends 'base.html' %}
+<!-- Для подключение деректории static -->
+{% load static %}
+{% load cache %}
+<!-- Meta данные -->
+{% block meta %}
+    {% for seo in view.get_seo_price %}
+        <title>{{ seo.SEO_title }}</title>
+        <meta name="description" content="{{ seo.SEO_description }}">
+    {% endfor %}
+    <meta property="og:title" content="Прайс | Фотограф Светлана Гавриловец"/>
+    <meta property="og:url" content="{% url 'price_list' %}"/>
+    <meta property="og:image" content="https://sun9-44.userapi.com/c854124/v854124924/2184dc/dAPsil5XX4s.jpg"/>
+    <meta property="og:image:secure_url" content="https://sun9-44.userapi.com/c854124/v854124924/2184dc/dAPsil5XX4s.jpg"/>
+    <meta property="og:image:type" content="image/jpeg"/>
+{% endblock meta %}
+{% block seo %}
+{% endblock seo %}
+<!-- Подключение стилей -->
+{% block style %}
+
+{% endblock style %}
+
+
+{% block price_pc %}
+    li-active
+{% endblock price_pc %}
+
+{% block price %}
+    li-active
+{% endblock price %}
+
+{% block div_grid %}
+    <div class="grid-albums-list">
+{% endblock div_grid %}
+
+
+{% block header %}
+    <header class="a-l-header">
+        <h1><span>П</span><span>р</span><span>а</span><span>й</span><span>с</span></h1>
+    </header>
+{% endblock header %}
+
+{% block content %}
+    <main class="a-l-main">
+        <section class="a-l-s-albums price">
+            <div class="a-l-photography-content">
+                <div id="wedding" class="photography-albums">
+                    {% for price in price_list %}
+                        <a href="{{ price.get_absolute_url }}" class="a-l-card">
+                            <div class="a-l-card-img">
+                                <img class="lazyload" data-src="{{ price.image.medium.url }}"
+                                     src="{{ price.image.small.url }}"
+                                     alt="{{ price.image_alt }}"
+                                     title="{{ price.image_title }}">
+                            </div>
+                            <h2 class="a-l-card-title">{{ price.name }}</h2>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock content %}
+
+{% block scripts %}
+    {% cache 86000 pl_scripts %}
+        <script src="{% static 'scripts/lazysizes.min.js' %}"></script>
+        <script src="{% static 'scripts/script.js' %}"></script>
+    {% endcache %}
+{% endblock scripts %}

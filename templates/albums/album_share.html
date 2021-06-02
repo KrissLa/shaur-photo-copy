@@ -1,0 +1,74 @@
+<!-- Подключение базового шаблона -->
+{% extends 'base.html' %}
+<!-- Для подключение деректории static -->
+{% load static %}
+<!-- Meta данные -->
+{% block meta %}
+    <title>Поделиться альбомом</title>
+{% endblock meta %}
+{% block seo %}
+{% endblock seo %}
+<!-- Подключение стилей -->
+{% block style %}
+{% endblock style %}
+{% block navbar %}
+{% endblock navbar %}
+{% block content %}
+    <div class="sent-container">
+        {% if sent %}
+            <h1 class="email-sent">E-mail успешно отправлен!</h1>
+            <p class="email-sent-p">Альбом "{{ album.name }}" успешно отправлен по
+                адресу {{ form.cleaned_data.email_to }}.</p>
+        {% else %}
+            <h1 class="email-sent">Поделиться альбомом "{{ album.name }}" по E-mail</h1>
+            <div class="offer-container">
+                <form action="." method="post">
+                    {#            {% for field in form %}#}
+                    <div class="offer-row100">
+                        <div class="offer-col">
+                            <div class="offer-inputBox">
+                                {{ field.errors }}
+                                {{ form.name }}
+                                {#                            <input type="{{ form.n }}" name="{{ field.name }}" required="required">#}
+                                <span class="offer-text">Введите Ваше имя</span>
+                                <span class="offer-line"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offer-row100">
+                        <div class="offer-col">
+                            <div class="offer-inputBox">
+                                {{ field.errors }}
+                                {{ form.email_to }}
+                                {#                            <input type="{{ form.n }}" name="{{ field.name }}" required="required">#}
+                                <span class="offer-text">Введите E-mail получателя</span>
+                                <span class="offer-line"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offer-row100">
+                        <div class="offer-col">
+                            <div class="offer-inputBox offer-textarea">
+                                {{ form.comments }}
+                                <span class="offer-text">Ваш комментарий (необязательно)</span>
+                                <span class="offer-line"></span>
+                            </div>
+                        </div>
+                    </div>
+                    {#                {{ field.errors }}#}
+                    {#                {{ field.label_tag }} {{ field }}#}
+                    {#            {% endfor %}#}
+                    {% csrf_token %}
+                    <div class="offer-row100">
+                        <div class="offer-col">
+                            <input type="submit" value="Отправить альбом">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock content %}
+{% block footer %}
+{% endblock footer %}

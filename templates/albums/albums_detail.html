@@ -1,0 +1,278 @@
+<!-- Подключение базового шаблона -->
+{% extends 'base.html' %}
+{% load cache %}
+<!-- Для подключение деректории static -->
+{% load static %}
+
+<!-- Meta данные -->
+{% block meta %}
+    <title>{{ albums.SEO_title }}</title>
+    <meta name="description" content="{{ albums.SEO_description }}">
+    <meta property="og:title" content="{{ albums.name }} | Фотограф Светлана Гавриловец"/>
+    <meta property="og:url" content="https%3A%2F%2Fshaur-photo.com{{ albums.get_absolute_url }}"/>
+    <meta property="og:image" content="https://shaur-photo.com{{ albums.poster.url }}"/>
+    <meta property="og:image:secure_url" content="https://secure.shaur-photo.com{{ albums.poster.url }}"/>
+    <meta property="og:image:type" content="image/jpeg"/>
+{% endblock meta %}
+{% block seo %}
+{% endblock seo %}
+<!-- Подключение стилей -->
+{% cache 86000 style %}
+    {% block style %}
+        <link rel="stylesheet" href="{% static 'style/lightbox.min.css' %}">
+        <script src="{% static 'scripts/lightbox.min.js' %}"></script>
+    {% endblock style %}
+{% endcache %}
+
+
+
+{% block albums_pc %}
+    li-active
+{% endblock albums_pc %}
+
+{% block albums %}
+    li-active
+{% endblock albums %}
+
+{#{% block div_grid %}#}
+{#        <div class="grid-albums-detail sveta-gallery-albums">#}
+{#{% endblock div_grid %}#}
+
+{% block header %}
+    <header class="a-d-header">
+
+        <div class="header-a-d-svg">
+            {{ albums.photography.svg_image|safe }}
+        </div>
+
+
+        <h1>{{ albums.name }}</h1>
+    </header>
+{% endblock header %}
+
+{% block content %}
+    <main class="a-d-main">
+        <small class="a-d-small">
+
+            <div class="share-album">
+
+                <h4>Поделиться: </h4>
+                <div class="share-album-a"><a
+                        href="http://vk.com/share.php?url=https%3A%2F%2Fshaur-photo.com{{ albums.get_absolute_url }}&"
+                        title="Вконтакте"
+                        onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                        target="_blank" rel="nofollow"><i class="fab fa-vk"></i></a></div>
+                <div class="share-album-a"><a title="Twitter"
+                                              href="https://twitter.com/share?url=https://shaur-photo.com{{ albums.get_absolute_url }}"
+                                              onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                                              target="_blank" rel="nofollow"><i class="fab fa-twitter"></i></a></div>
+                <div class="share-album-a"><a title="Facebook"
+                                              href="https://www.facebook.com/sharer/sharer.php?u=https://shaur-photo.com{{ albums.get_absolute_url }}"
+                                              onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                                              target="_blank" rel="nofollow"><i class="fab fa-facebook-square"></i></a>
+                </div>
+                <div class="share-album-a"><a title="Отправить по e-mail"
+                                              href="{% url 'albums_share' albums.id albums.slug %}"
+                                              onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=520,width=650');return false;"
+                                              target="_blank" rel="nofollow"><i class="far fa-envelope"></i></a></div>
+                <div class="share-album-a"><a title="Linkedin"
+                                              href="https://www.linkedin.com/shareArticle?mini=true&url=https://shaur-photo.com{{ albums.get_absolute_url }}"
+                                              onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                                              target="_blank" rel="nofollow"><i class="fab fa-linkedin"></i></a></div>
+                <div class="share-album-a tel"><a title="Viber"
+                                                  href="https://api.addthis.com/oexchange/0.8/forward/viber/offer?url=https%3A%2F%2Fshaur-photo.com{{ albums.get_absolute_url }}"
+                                                  onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                                                  target="_blank" rel="nofollow"><i class="fab fa-viber"></i></a></div>
+                <div class="share-album-a"><a title="Одноклассники"
+                                              href="https://api.addthis.com/oexchange/0.8/forward/odnoklassniki_ru/offer?url=https%3A%2F%2Fshaur-photo.com{{ albums.get_absolute_url }}"
+                                              onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                                              target="_blank" rel="nofollow"><i class="fab fa-odnoklassniki-square"></i></a>
+                </div>
+                <div class="share-album-a"><a title="Telegram"
+                                              href="https://api.addthis.com/oexchange/0.8/forward/telegram/offer?url=https%3A%2F%2Fshaur-photo.com{{ albums.get_absolute_url }}"
+                                              onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                                              target="_blank" rel="nofollow"><i class="fab fa-telegram"></i></a></div>
+                <div class="share-album-a tel"><a title="Whatsapp"
+                                                  href="https://api.addthis.com/oexchange/0.8/forward/whatsapp/offer?url=https%3A%2F%2Fshaur-photo.com{{ albums.get_absolute_url }}"
+                                                  onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                                                  target="_blank" rel="nofollow"><i class="fab fa-whatsapp-square"></i></a>
+                </div>
+            </div>
+
+        </small>
+
+        <div class="albums-gallery">
+            {% for div in albums.albumsdiv_set.all %}
+                <div class="{{ div.div_class }}">
+                    {% for img in div.get_photo %}
+                        <a href="{{ img.photo.url }}" data-lightbox="album">
+                            <img class="lazyload"
+
+                                    {% if div.div_class == 'a-g-1' %}
+                                 data-src="{{ img.photo.ag1.url }}"
+                                    {% elif div.div_class == 'a-g-2' %}
+                                 data-src="{{ img.photo.ag2.url }}"
+                                    {% elif div.div_class == 'a-g-2-1' %}
+                                 data-src="{{ img.photo.ag21.url }}"
+                                    {% elif div.div_class == 'a-g-1-2' %}
+                                 data-src="{{ img.photo.ag21.url }}"
+                                    {% elif div.div_class == 'a-g-3' %}
+                                 data-src="{{ img.photo.ag3.url }}"
+                                    {% elif div.div_class == 'a-g-2-1-1' %}
+                                 data-src="{{ img.photo.ag211.url }}"
+                                    {% elif div.div_class == 'a-g-1-1-2' %}
+                                 data-src="{{ img.photo.ag211.url }}"
+                                    {% elif div.div_class == 'a-g-1-2-1' %}
+                                 data-src="{{ img.photo.ag211.url }}"
+                                    {% elif div.div_class == 'a-g-2-2-1' %}
+                                 data-src="{{ img.photo.ag221.url }}"
+                                    {% elif div.div_class == 'a-g-2-1-2' %}
+                                 data-src="{{ img.photo.ag221.url }}"
+                                    {% elif div.div_class == 'a-g-1-2-2' %}
+                                 data-src="{{ img.photo.ag221.url }}"
+                                    {% elif div.div_class == 'a-g-4' %}
+                                 data-src="{{ img.photo.ag4.url }}"
+                                    {% elif div.div_class == 'a-g-1-2-2-2' %}
+                                 data-src="{{ img.photo.ag1222.url }}"
+                                    {% elif div.div_class == 'a-g-2-2-2-1' %}
+                                 data-src="{{ img.photo.ag1222.url }}"
+                                    {% elif div.div_class == 'a-g-2-1-2-2' %}
+                                 data-src="{{ img.photo.ag1222.url }}"
+                                    {% elif div.div_class == 'a-g-2-2-1-2' %}
+                                 data-src="{{ img.photo.ag1222.url }}"
+                                    {% elif div.div_class == 'a-g-1-1-2-2' %}
+                                 data-src="{{ img.photo.ag1122.url }}"
+                                    {% elif div.div_class == 'a-g-2-2-1-1' %}
+                                 data-src="{{ img.photo.ag1122.url }}"
+                                    {% elif div.div_class == 'a-g-1-2-2-1' %}
+                                 data-src="{{ img.photo.ag1122.url }}"
+                                    {% elif div.div_class == 'a-g-1-1-1-2' %}
+                                 data-src="{{ img.photo.ag1112.url }}"
+                                    {% elif div.div_class == 'a-g-2-1-1-1' %}
+                                 data-src="{{ img.photo.ag1112.url }}"
+                                    {% elif div.div_class == 'a-g-1-2-1-1' %}
+                                 data-src="{{ img.photo.ag1112.url }}"
+                                    {% elif div.div_class == 'a-g-1-1-2-1' %}
+                                 data-src="{{ img.photo.ag1112.url }}"
+                                    {% endif %}
+
+                                 src="{{ img.photo.small.url }}"
+                                 alt="{{ img.alt_photo }}"
+                                 title="{{ img.title_photo }}">
+                        </a>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="gallery-sveta-768">
+            {% for div in albums.albumsdiv_set.all %}
+                {% for img in div.get_photo %}
+                    <img class="lazyload"
+                         data-src="{{ img.photo.ag2.url }}"
+                         src="{{ img.photo.small.url }}"
+                         alt="{{ img.alt_photo }}"
+                         title="{{ img.title_photo }}">
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+    </main>
+
+    <aside class="a-d-aside">
+        <div class="another-albums">
+            <nav class="another-albums-accordion">
+                <div class="ars-album-list1">
+                    <h4>Другие альбомы</h4>
+                    {% for ph in view.get_photography_all %}
+                        <div class="ars-panel">
+                            <div class="ars-panel-heading">
+                                <a href="#">{{ ph.name }}</a>
+                            </div>
+
+                            <div class="ars-panel-collapse">
+                                <div class="ars-panel-body">
+                                    <div class="ars-panel-ul">
+                                        <ul>
+                                            {% for al in ph.get_albums %}
+                                                <li><a href="{{ al.get_absolute_url }}">
+                                                    {% if al.was_published_recently %}
+                                                        <div class="new_al min">
+                                                            NEW
+                                                        </div>
+                                                    {% endif %} {{ al.name }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                </div>
+            </nav>
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+                $('.ars-panel-heading').click(function () {
+                    $(this).toggleClass('in').next().slideToggle();
+                    $('.ars-panel-heading').not(this).removeClass('in').next().slideUp();
+                    return false;
+                });
+
+            });
+        </script>
+    </aside>
+{% endblock content %}
+
+
+
+{% block scripts %}
+    {% cache 86000 albums_scripts %}
+        <script src="{% static 'scripts/lazysizes.min.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lazy-line-painter@1.9.4/lib/lazy-line-painter-1.9.4.min.js"></script>
+
+        <script type="text/javascript">
+
+            (function () {
+
+                document.onreadystatechange = () => {
+
+                    if (document.readyState === 'complete') {
+
+                        /**
+                         * Setup your Lazy Line element.
+                         * see README file for more settings
+                         */
+
+                        let el = document.querySelector('#album-svg-icon');
+                        let myAnimation = new LazyLinePainter(el, {
+                            "ease": "easeLinear",
+                            "strokeWidth": 0.5,
+                            "strokeOpacity": 1,
+                            "strokeColor": "#ffffff",
+                            "strokeCap": "square"
+                        });
+                        myAnimation.paint();
+                    }
+                }
+
+            })();
+
+
+        </script>
+        <script type="text/javascript">
+            lightbox.option({
+                'alwaysShowNavOnTouchDevices': true,
+                'albumLabel': "%1 / %2",
+                'imageFadeDuration': 0,
+                'resizeDuration': 300,
+                'positionFromTop': 15,
+                'disableScrolling': true,
+            })
+        </script>
+        <script src="{% static 'scripts/script.js' %}"></script>
+    {% endcache %}
+{% endblock scripts %}
+

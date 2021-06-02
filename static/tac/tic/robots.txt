@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin
+Disallow: /3773ex6
+Disallow: /reviews/review_successfully_added/
+Disallow: /places/place_added/
+Disallow: /how_to_order_photography/offer_added//
+Sitemap: https://shaur-photo.com/sitemap.xml

@@ -1,0 +1,75 @@
+{% load static recaptcha3 %}
+{% load seo_tags %}
+{% load cache %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    {% block meta %}
+
+    {% endblock meta %}
+    <meta name="author" content="Светлана Гавриловец">
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'style/normalize.css' %}">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://kit.fontawesome.com/25fa9de4fb.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'style/menu_r_u_min.css' %}">
+
+    {% block style %}
+
+    {% endblock style %}
+
+    {% all_counter %}
+    {% all_ss %}
+
+{% cache 1800 menu %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.menu-toggle').click(function () {
+                $('.menu-toggle').toggleClass('active');
+                $('nav.nav-pc').toggleClass('active');
+            })
+            $('.menu-toggle-tel').click(function () {
+                $('.menu-toggle-tel').toggleClass('active');
+            })
+        })
+    </script>
+{% endcache %}
+
+</head>
+
+{% block body %}
+
+    {% block navbar %}
+
+    {% endblock navbar %}
+
+    {% block header %}
+
+    {% endblock header %}
+
+    {% block content %}
+
+    {% endblock content %}
+
+    {% block footer %}
+
+    {% endblock footer %}
+
+    {% block fix %}
+
+    {% endblock fix %}
+
+    {% block scripts %}
+
+    {% endblock scripts %}
+
+
+{% endblock body %}
+
+
+</html>

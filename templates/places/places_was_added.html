@@ -1,0 +1,53 @@
+<!-- Подключение базового шаблона -->
+{% extends 'base.html' %}
+<!-- Для подключение деректории static -->
+{% load static %}
+<!-- Meta данные -->
+{% block meta %}
+    <title>Новое место добавлено!</title>
+    <meta name="description" content="Новое место добавлено!">
+{% endblock meta %}
+{% block seo %}
+{% endblock seo %}
+<!-- Подключение стилей -->
+{% block style %}
+{% endblock style %}
+
+
+{% block place_pc %}
+    li-active
+{% endblock place_pc %}
+
+{% block place %}
+    li-active
+{% endblock place %}
+
+
+
+{% block header %}
+    <div class="rev-add-container">
+        <div class="rev_login_hello">
+            <p>Спасибо за помощь в собирании коллекции! Предложенное Вами место будет добавлено после модерации.</p>
+
+        </div>
+        <div class="add_nav places-add">
+            <a href="{% url 'places_list' %}">Вернуться к коллекции</a>
+            <a href="{% url 'places_list' %}#places-t=offer">Предложить еще одно место</a>
+            <a href="{% url 'main' %}">На главную</a>
+        </div>
+    </div>
+{% endblock header %}
+
+
+
+
+{% block scripts %}
+    <script src="{% static 'scripts/tabs.js' %}"></script>
+    <script type="text/javascript">
+        $('.places-tabs').flexTabs();
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.0/velocity.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/velocity/1.3.0/velocity.ui.js'></script>
+    <script src="{% static 'scripts/places_detail.js' %}"></script>
+    <script src="{% static 'scripts/script.js' %}"></script>
+{% endblock scripts %}

@@ -1,0 +1,30 @@
+{% load cache %}
+{% cache 86000 footer %}
+<div class="container1">
+    <div class="footer-up">
+        <div
+                class="footer-logo">
+            <a href="{% url 'offer_ph' %}">Как заказать фотосъёмку?</a>
+        </div>
+        <div
+                class="contacts">
+            <a title="Позвонить" href="tel:+375298443638"><i class="fas fa-phone-alt"></i>+375298443638</a>
+        </div>
+    </div>
+    <hr class="footer-hr"/>
+    <div class="footer-down">
+        <ul>
+            <li  class="pc"><a title="Страничка VK" target="_blank"  href="https://vk.com/mischkova"><i class="fab fa-vk"></i></a></li>
+            <li class="pc"><a title="Группа VK" target="_blank" href="https://vk.com/club134565385"><i class="fab fa-vk"></i></a></li>
+            <li class="a-tel"><a href="vk://vk.com/mischkova"><i class="fab fa-vk"></i></a></li>
+            <li class="a-tel"><a href="vk://vk.com/club134565385"><i class="fab fa-vk"></i></a></li>
+            <li><a title="Инстаграм" target="_blank" href="https://www.instagram.com/sviatlana_haurylavets"><i
+                    class="fab fa-instagram"></i></a></li>
+        </ul>
+    </div>
+</div>
+</footer>
+
+<a href="#" class="scroll-to-top"><i class="fa fa-arrow-up" aria-hidden="true"></i> </a>
+
+{% endcache %}

@@ -1,0 +1,135 @@
+{% extends 'super-base.html' %}
+<!-- Для подключение деректории static -->
+{% load static recaptcha3 %}
+{% load photography_tags %}
+{% load cache %}
+<!-- Meta данные -->
+{% block meta %}
+
+{% endblock meta %}
+
+<!-- Подключение стилей -->
+{% block style %}
+
+{% endblock style %}
+
+{% block body %}
+    {% block body_name %}
+        <body class="a-l-body">
+    {% endblock body_name %}
+
+
+{% block navbar %}
+    <div class="navbar-pc">
+        <div class="menu-toggle ">
+
+            <span></span>
+            <span></span>
+            <span></span>
+            <p>МЕНЮ</p>
+        </div>
+        <nav class="nav-pc">
+            <ul>
+                <li><a class="{% block main_pc %}{% endblock main_pc %}"  href="{% url 'main' %}">Главная</a></li>
+                <li><a class="{% block albums_pc %}{% endblock albums_pc %}"  href="{% url 'albums_list' %}">Альбомы <i
+                        style="margin-left: 5px"
+                        class="fas fa-angle-down"></i></a>
+                    <ul>
+                        {% block all_ph %}
+                            {% all_photography %}
+                        {% endblock all_ph %}
+                    </ul>
+                </li>
+                <li><a class="{% block  price_pc %}{% endblock price_pc %}"  href="{% url 'price_list' %}">Прайс</a></li>
+                <li><a class="{% block review_pc %}{% endblock review_pc %}"  href="{% url 'review_list' %}">Отзывы</a></li>
+                <li><a class="{% block blog_pc %}{% endblock blog_pc %}"  href="{% url 'post_list' %}">Блог</a></li>
+                <li><a class="{% block place_pc %}{% endblock place_pc %}"  href="{% url 'places_list' %}">Места</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div id="toggleIcon" onclick="menuToggle()">
+        <div class="menu-toggle-tel">
+
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <nav id="menu-overlay">
+        <ul>
+            <li><a href="{% url 'main' %}" class="logo">
+                {% cache 1800 logo %}
+                    <img class="logo-image-sh"
+                         src="{% static 'images/new-logo-sh-compr.png' %}"
+                         height="115" width="100px">
+                {% endcache %}
+            </a></li>
+            <li><a class="width250 {% block main %}{% endblock main %}"  href="{% url 'main' %}">Главная</a></li>
+            <li><a class="width250 {% block albums %}{% endblock albums %}"  href="{% url 'albums_list' %}">Альбомы</a>
+            </li>
+            <li><a class="width250 {% block price %}{% endblock price %}"  href="{% url 'price_list' %}">Прайс</a></li>
+            <li><a class="width250 {% block review %}{% endblock review %}"  href="{% url 'review_list' %}">Отзывы</a></li>
+            <li><a class="width250 {% block blog %}{% endblock blog %}"  href="{% url 'post_list' %}">Блог</a></li>
+            <li><a class="width250 {% block place %}{% endblock place %}"  href="{% url 'places_list' %}">Места</a></li>
+            <li class="social">
+                <ul>
+                    <li><a href="vk://vk.com/mischkova"><i class="fab fa-vk"></i></a></li>
+                    <li><a href="vk://vk.com/club134565385"><i class="fab fa-vk"></i></a></li>
+                    <li><a href="https://www.instagram.com/sviatlana_haurylavets"><i
+                            class="fab fa-instagram"></i></a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    {% cache 1800 script_menu %}
+    <script type="text/javascript">
+        function menuToggle() {
+            var nav = document.getElementById('menu-overlay');
+            nav.classList.toggle('active-menu');
+        }
+    </script>
+    {% endcache %}
+{% endblock navbar %}
+
+{% block div_grid %}
+    <div class="grid-albums-detail">
+{% endblock div_grid %}
+
+{% block header %}
+
+{% endblock header %}
+
+{% block content %}
+
+{% endblock content %}
+
+{% block end_div %}
+    </div>
+{% endblock end_div %}
+{% block footer %}
+    {% block footer_name %}
+        <footer class="a-l-footer">
+    {% endblock footer_name %}
+    {% include 'include/footer_and_scroll_up.html' %}
+{% endblock footer %}
+
+
+{% block fix %}
+
+    {% include 'include/fix.html' %}
+
+{% endblock fix %}
+
+{% block scripts %}
+
+{% endblock scripts %}
+{#<section class="VK">#}
+{#    <div id="vk_community_messages"></div>#}
+{#    <script type="text/javascript">#}
+{#        VK.Widgets.CommunityMessages("vk_community_messages", 134565385);#}
+{#    </script>#}
+{#</section>#}
+</body>
+{% endblock body %}
+
+
